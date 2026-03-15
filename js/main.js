@@ -412,6 +412,7 @@ function openCheckoutModal(showForm) {
     if (showForm && formView && cartView) {
         cartView.hidden = true;
         formView.hidden = false;
+        formView.classList.remove('checkout-form-view--no-cart'); // з картки товару — показуємо форму + товари
     } else if (cartView && formView) {
         cartView.hidden = false;
         formView.hidden = true;
@@ -441,13 +442,14 @@ document.querySelector('.cart-btn')?.addEventListener('click', () => {
     openCheckoutModal(false);
 });
 
-// Перехід з виду кошика на форму замовлення
+// Перехід з виду кошика на форму замовлення — тільки форма, без переліку товарів
 document.querySelector('[data-checkout-goto-form]')?.addEventListener('click', () => {
     const cartView = document.querySelector('[data-checkout-cart-view]');
     const formView = document.querySelector('[data-checkout-form-view]');
     if (cartView && formView) {
         cartView.hidden = true;
         formView.hidden = false;
+        formView.classList.add('checkout-form-view--no-cart'); // тільки форма, без картинок і товару
     }
 });
 

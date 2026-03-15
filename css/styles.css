@@ -1516,6 +1516,11 @@ body.modal-open {
     min-height: 0;
 }
 
+/* Коли зайшли з кошика по кнопці «Оформити замовлення» — тільки форма, без блоку «У кошику» */
+.checkout-form-view--no-cart .checkout-summary-in-form {
+    display: none;
+}
+
 @media (max-width: 768px) {
     .checkout-form-view {
         max-height: 85vh;
