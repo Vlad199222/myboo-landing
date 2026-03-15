@@ -234,6 +234,23 @@ function initReviewsSlider() {
 const modalBackdrop = document.querySelector('[data-modal-backdrop]');
 const modalMainImage = document.querySelector('[data-modal-main-image]');
 const checkoutBackdrop = document.querySelector('[data-checkout-backdrop]');
+
+let bodyScrollLockCount = 0;
+function lockBodyScroll() {
+    bodyScrollLockCount++;
+    if (bodyScrollLockCount !== 1) return;
+    const scrollY = window.scrollY || window.pageYOffset;
+    document.documentElement.style.setProperty('--scroll-y', `${scrollY}px`);
+    document.body.classList.add('modal-open');
+}
+function unlockBodyScroll() {
+    bodyScrollLockCount = Math.max(0, bodyScrollLockCount - 1);
+    if (bodyScrollLockCount !== 0) return;
+    document.body.classList.remove('modal-open');
+    const scrollY = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--scroll-y') || '0');
+    document.documentElement.style.removeProperty('--scroll-y');
+    window.scrollTo(0, scrollY);
+}
 const checkoutItemsEl = document.querySelector('[data-checkout-items]');
 const checkoutTotalEl = document.querySelector('[data-checkout-total]');
 const checkoutTotalBottomEl = document.querySelector('[data-checkout-total-bottom]');
@@ -303,10 +320,12 @@ function openProductModal(productId) {
     if (modalDescEls[3]) modalDescEls[3].innerHTML = `<strong>Опис:</strong> ${escapeHtml(product.description || '').replace(/\n/g, '<br>')}`;
 
     modalBackdrop.hidden = false;
+    lockBodyScroll();
 }
 
 function closeProductModal() {
     if (modalBackdrop) modalBackdrop.hidden = true;
+    unlockBodyScroll();
 }
 
 modalBackdrop?.addEventListener('click', (e) => {
@@ -370,11 +389,13 @@ function openCheckoutModal() {
         checkoutMessageEl.dataset.state = '';
     }
     checkoutBackdrop.hidden = false;
+    lockBodyScroll();
 }
 
 function closeCheckoutModal() {
     if (!checkoutBackdrop) return;
     checkoutBackdrop.hidden = true;
+    unlockBodyScroll();
 }
 
 checkoutBackdrop?.addEventListener('click', (e) => {

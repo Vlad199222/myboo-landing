@@ -1065,6 +1065,16 @@ img {
 }
 
 /* === Modal === */
+/* Блокування прокрутки сторінки під модалкою (мобільні) */
+body.modal-open {
+    overflow: hidden;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: calc(-1 * var(--scroll-y, 0px));
+    width: 100%;
+}
+
 .modal-backdrop {
     position: fixed;
     inset: 0;
@@ -1073,6 +1083,8 @@ img {
     align-items: center;
     justify-content: center;
     z-index: 200;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .modal-backdrop[hidden] {
