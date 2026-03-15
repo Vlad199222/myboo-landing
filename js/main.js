@@ -423,6 +423,12 @@ function openCheckoutModal(showForm) {
 
 function closeCheckoutModal() {
     if (!checkoutBackdrop) return;
+    const cartView = document.querySelector('[data-checkout-cart-view]');
+    const formView = document.querySelector('[data-checkout-form-view]');
+    if (cartView && formView) {
+        formView.hidden = true;
+        cartView.hidden = false;
+    }
     checkoutBackdrop.hidden = true;
     unlockBodyScroll();
 }

@@ -1429,6 +1429,10 @@ body.modal-open {
 }
 
 /* Вид форми: кошик зверху + форма, все влізає на екран */
+.checkout-form-view[hidden] {
+    display: none !important;
+}
+
 .checkout-form-view {
     display: flex;
     flex-direction: column;
