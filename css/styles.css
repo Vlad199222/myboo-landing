@@ -474,14 +474,7 @@ img {
     border-radius: var(--radius);
     font-weight: 600;
     cursor: pointer;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity var(--transition), transform var(--transition);
-}
-
-.product-card:hover .product-quick-add {
-    opacity: 1;
-    transform: translateY(0);
+    transition: background var(--transition);
 }
 
 .product-quick-add:hover {
@@ -1147,6 +1140,12 @@ body.modal-open {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 }
+@media (max-width: 768px) {
+    .modal-backdrop[data-modal-backdrop] {
+        align-items: flex-start;
+        padding: 3.25rem 0.75rem 1.5rem;
+    }
+}
 
 .modal-backdrop[hidden] {
     display: none;
@@ -1167,19 +1166,41 @@ body.modal-open {
     position: absolute;
     top: 0.75rem;
     right: 0.75rem;
-    width: 32px;
-    height: 32px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     border: none;
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--color-text);
-    font-size: 1.1rem;
+    background: #c62828;
+    color: #fff;
+    font-size: 1.5rem;
+    line-height: 1;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+.modal-close:hover {
+    background: #e53935;
+}
+@media (max-width: 768px) {
+    [data-modal-backdrop] .modal-close {
+        position: fixed;
+        top: 0.5rem;
+        right: 0.5rem;
+        z-index: 201;
+        width: 52px;
+        height: 52px;
+        font-size: 1.75rem;
+        background: #c62828;
+        color: #fff;
+        box-shadow: 0 2px 12px rgba(198, 40, 40, 0.5);
+    }
+    [data-modal-backdrop] .modal-close:hover {
+        background: #e53935;
+    }
 }
 
-.modal-close:hover {
-    background: rgba(255, 255, 255, 0.14);
-}
 
 .modal-body {
     display: grid;
@@ -1334,6 +1355,11 @@ body.modal-open {
 }
 
 @media (max-width: 768px) {
+    [data-modal-backdrop] .modal {
+        margin: 0;
+        padding: 2rem 1rem 1.5rem;
+        max-height: none;
+    }
     .modal-body {
         grid-template-columns: 1fr;
         grid-template-areas:
@@ -1342,10 +1368,15 @@ body.modal-open {
             "info";
     }
     .modal-image-main {
-        min-height: 55vh;
+        min-height: 0;
+        max-height: 58vh;
     }
     .modal-image-main img {
-        max-height: 65vh;
+        max-height: 55vh;
+        width: auto;
+        max-width: 100%;
+        margin: 0 auto;
+        display: block;
     }
 }
 
