@@ -352,7 +352,16 @@
                     <h2 id="checkout-form-title">Оформлення замовлення</h2>
                     <p class="checkout-subtitle">Оплата на Новій пошті при отриманні · Якість гарантована</p>
                 </div>
-                <form class="checkout-form" data-checkout-form>
+                <div class="checkout-form-body">
+                    <div class="checkout-summary-in-form">
+                        <p class="checkout-summary-in-form-title">У кошику:</p>
+                        <div class="checkout-items checkout-items-in-form" data-checkout-items-form></div>
+                        <div class="checkout-total-row checkout-total-row-in-form">
+                            <span>Разом:</span>
+                            <span class="checkout-total" data-checkout-total-form>0 грн</span>
+                        </div>
+                    </div>
+                    <form class="checkout-form" data-checkout-form>
                     <label class="checkout-label">
                         Ім’я (обов'язково):
                         <input type="text" name="firstName" required>
@@ -391,6 +400,7 @@
                     <button type="submit" class="checkout-submit">Замовити</button>
                     <p class="checkout-message" data-checkout-message></p>
                 </form>
+                </div>
             </div>
         </div>
     </div>

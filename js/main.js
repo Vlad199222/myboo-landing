@@ -254,6 +254,8 @@ function unlockBodyScroll() {
 const checkoutItemsEl = document.querySelector('[data-checkout-items]');
 const checkoutTotalEl = document.querySelector('[data-checkout-total]');
 const checkoutTotalBottomEl = document.querySelector('[data-checkout-total-bottom]');
+const checkoutItemsFormEl = document.querySelector('[data-checkout-items-form]');
+const checkoutTotalFormEl = document.querySelector('[data-checkout-total-form]');
 const checkoutMessageEl = document.querySelector('[data-checkout-message]');
 
 function openProductModal(productId) {
@@ -350,6 +352,7 @@ document.querySelector('[data-modal-backdrop]')?.addEventListener('click', (e) =
 function renderCheckoutItems() {
     if (!checkoutItemsEl || !checkoutTotalEl || !checkoutTotalBottomEl) return;
     checkoutItemsEl.innerHTML = '';
+    if (checkoutItemsFormEl) checkoutItemsFormEl.innerHTML = '';
     let total = 0;
     cart.forEach((item, index) => {
         const lineTotal = item.price * item.quantity;
@@ -371,10 +374,26 @@ function renderCheckoutItems() {
             <button type="button" class="checkout-item-remove" data-remove-one="${index}" aria-label="Видалити з кошика">×</button>
         `;
         checkoutItemsEl.appendChild(row);
+        if (checkoutItemsFormEl) {
+            const rowForm = document.createElement('div');
+            rowForm.className = 'checkout-item checkout-item-in-form';
+            rowForm.innerHTML = `
+                <div class="checkout-item-thumb">
+                ${item.image ? `<img src="${escapeHtml(item.image)}" alt="">` : `<div class="product-placeholder">Фото</div>`}
+                </div>
+                <div class="checkout-item-info">
+                    <div class="checkout-item-name">${escapeHtml(item.name)}</div>
+                    <div class="checkout-item-meta">× ${item.quantity}</div>
+                </div>
+                <div class="checkout-item-price">${lineTotal.toFixed(0)} грн</div>
+            `;
+            checkoutItemsFormEl.appendChild(rowForm);
+        }
     });
     const totalText = total.toFixed(0) + ' грн';
     checkoutTotalEl.textContent = totalText;
     checkoutTotalBottomEl.textContent = totalText;
+    if (checkoutTotalFormEl) checkoutTotalFormEl.textContent = totalText;
 }
 
 function openCheckoutModal(showForm) {
@@ -842,6 +861,18 @@ const products = [
     Зав'язується стрічкою спереду.
     У комплекті трусики-стрінги.
     Довжина халатика 75 см.`
+    },
+
+    {
+    id: 15,
+    category: "БОДІ",
+    name: "Боді з доступом чорне",
+    image: "assets/BodyZDostupomChorne2.jpg",
+    images: ["assets/BodyZDostupomChorne2.jpg"],
+    color: "чорне",
+    price: 360,
+    sizes: ["80B", "80C", "80D", "80E", "85B", "85C", "85D", "85E", "90B", "90C", "90D", "90E"],
+    description: `Боді з відкритим вирізом знизу. Зручне для годування. М'який пуш-ап. Можна носити з костюмом або окремо.`
     }
     ];
 

@@ -1428,6 +1428,112 @@ body.modal-open {
     transform: translateY(-1px);
 }
 
+/* Вид форми: кошик зверху + форма, все влізає на екран */
+.checkout-form-view {
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.checkout-form-view .checkout-header {
+    margin-bottom: 0.5rem;
+}
+
+.checkout-form-view .checkout-subtitle {
+    margin-bottom: 0.75rem;
+}
+
+.checkout-form-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-height: 0;
+}
+
+.checkout-summary-in-form {
+    background: var(--color-bg);
+    border-radius: var(--radius);
+    padding: 0.6rem 0.75rem;
+    flex-shrink: 0;
+}
+
+.checkout-summary-in-form-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    margin: 0 0 0.4rem 0;
+}
+
+.checkout-items-in-form {
+    gap: 0.4rem;
+    margin-bottom: 0.4rem;
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+.checkout-item-in-form {
+    grid-template-columns: 32px 1fr auto;
+    gap: 0.5rem;
+    padding-bottom: 0.35rem;
+    padding-top: 0.25rem;
+}
+
+.checkout-item-in-form .checkout-item-thumb img,
+.checkout-item-in-form .product-placeholder {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+}
+
+.checkout-item-in-form .checkout-item-info {
+    font-size: 0.8rem;
+    min-width: 0;
+}
+
+.checkout-item-in-form .checkout-item-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.checkout-item-in-form .checkout-item-price {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.checkout-total-row-in-form {
+    padding-top: 0.35rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.9rem;
+}
+
+.checkout-form-view .checkout-form {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+@media (max-width: 768px) {
+    .checkout-form-view {
+        max-height: 85vh;
+    }
+    .checkout-form-view .checkout-form {
+        gap: 0.5rem;
+    }
+    .checkout-form-view .checkout-label {
+        font-size: 0.8rem;
+    }
+    .checkout-form-view .checkout-label input {
+        padding: 0.45rem 0.6rem;
+    }
+    .checkout-items-in-form {
+        max-height: 100px;
+    }
+}
+
 .checkout-body {
     display: grid;
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr);
