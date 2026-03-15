@@ -377,7 +377,7 @@ function renderCheckoutItems() {
     checkoutTotalBottomEl.textContent = totalText;
 }
 
-function openCheckoutModal() {
+function openCheckoutModal(showForm) {
     if (!checkoutBackdrop || !checkoutItemsEl || !checkoutTotalEl || !checkoutTotalBottomEl) return;
     if (cart.length === 0) {
         showToast('Додайте товар до кошика.');
@@ -387,6 +387,15 @@ function openCheckoutModal() {
     if (checkoutMessageEl) {
         checkoutMessageEl.textContent = '';
         checkoutMessageEl.dataset.state = '';
+    }
+    const cartView = document.querySelector('[data-checkout-cart-view]');
+    const formView = document.querySelector('[data-checkout-form-view]');
+    if (showForm && formView && cartView) {
+        cartView.hidden = true;
+        formView.hidden = false;
+    } else if (cartView && formView) {
+        cartView.hidden = false;
+        formView.hidden = true;
     }
     checkoutBackdrop.hidden = false;
     lockBodyScroll();
@@ -408,9 +417,19 @@ document.querySelectorAll('[data-checkout-close]').forEach(btn => {
     btn.addEventListener('click', () => closeCheckoutModal());
 });
 
-// Клік по кошику в навігації — відкриває модалку оформлення замовлення (та сама форма, що після «Замовити по знижці»)
+// Клік по кошику в навігації — відкриває модалку з переліком товарів та кнопкою «Оформити замовлення»
 document.querySelector('.cart-btn')?.addEventListener('click', () => {
-    openCheckoutModal();
+    openCheckoutModal(false);
+});
+
+// Перехід з виду кошика на форму замовлення
+document.querySelector('[data-checkout-goto-form]')?.addEventListener('click', () => {
+    const cartView = document.querySelector('[data-checkout-cart-view]');
+    const formView = document.querySelector('[data-checkout-form-view]');
+    if (cartView && formView) {
+        cartView.hidden = true;
+        formView.hidden = false;
+    }
 });
 
 // Видалити один товар з кошика в модалці оформлення
@@ -459,7 +478,7 @@ document.querySelector('[data-modal-order]')?.addEventListener('click', () => {
 
     addToCart(product.id, displayName, product.price, quantity, product.image || '');
     closeProductModal();
-    openCheckoutModal();
+    openCheckoutModal(true);
 });
 
 // Кнопка "Додати в кошик і продовжити покупки" — додає в кошик, закриває модалку, без відкриття checkout

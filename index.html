@@ -330,12 +330,12 @@
     <div class="modal-backdrop checkout-backdrop" data-checkout-backdrop hidden>
         <div class="modal checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
             <button class="modal-close" type="button" data-checkout-close aria-label="Закрити">×</button>
-            <div class="checkout-header">
-                <h2 id="checkout-title">Оплата на Новій пошті при отриманні</h2>
-                <p class="checkout-subtitle">Якість гарантована · Ціна актуальна на період знижки</p>
-            </div>
-            <div class="checkout-body">
-                <div class="checkout-summary">
+            <div class="checkout-cart-view" data-checkout-cart-view>
+                <div class="checkout-header">
+                    <h2 id="checkout-title">Ваш кошик</h2>
+                    <p class="checkout-subtitle">Перевірте товари та натисніть «Оформити замовлення»</p>
+                </div>
+                <div class="checkout-summary checkout-summary-standalone">
                     <div class="checkout-items" data-checkout-items>
                         <!-- товари підставляються з JS -->
                     </div>
@@ -344,7 +344,13 @@
                         <span>Загальна сума:</span>
                         <span class="checkout-total" data-checkout-total>0 грн</span>
                     </div>
-                    <p class="checkout-note">Повна анонімність для вас — посилку на пошті вказуємо як білизна.</p>
+                    <button type="button" class="checkout-goto-form-btn" data-checkout-goto-form>Оформити замовлення</button>
+                </div>
+            </div>
+            <div class="checkout-form-view" data-checkout-form-view hidden>
+                <div class="checkout-header">
+                    <h2 id="checkout-form-title">Оформлення замовлення</h2>
+                    <p class="checkout-subtitle">Оплата на Новій пошті при отриманні · Якість гарантована</p>
                 </div>
                 <form class="checkout-form" data-checkout-form>
                     <label class="checkout-label">
