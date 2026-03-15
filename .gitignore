@@ -1,0 +1,12 @@
+# Залежності
+node_modules/
+
+# Локальні змінні (не публікувати!)
+.env
+.env.local
+.env.*.local
+
+# Логи та тимчасові файли
+*.log
+npm-debug.log*
+.DS_Store
