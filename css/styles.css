@@ -981,6 +981,67 @@ img {
     display: block;
 }
 
+/* Менший блок "Менеджер" на планшетах і телефонах */
+@media (max-width: 1024px) {
+    .messenger-float-toggle {
+        width: 44px;
+        height: 44px;
+    }
+    .messenger-float-toggle-icon,
+    .messenger-float-toggle-icon svg {
+        width: 26px;
+        height: 26px;
+    }
+    .messenger-float-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+    .telegram-float-icon,
+    .viber-float-icon {
+        width: 52px;
+        height: 52px;
+    }
+    .telegram-float-icon svg,
+    .viber-float-icon svg {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+@media (max-width: 600px) {
+    .messenger-float-wrap {
+        right: 2px;
+        padding: 0.25rem 0;
+    }
+    .messenger-float-toggle {
+        width: 40px;
+        height: 40px;
+    }
+    .messenger-float-toggle-icon,
+    .messenger-float-toggle-icon svg {
+        width: 22px;
+        height: 22px;
+    }
+    .messenger-float-label {
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    .messenger-float-buttons {
+        gap: 0.5rem;
+    }
+    .telegram-float-icon,
+    .viber-float-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px 0 0 10px;
+    }
+    .telegram-float-icon svg,
+    .viber-float-icon svg {
+        width: 26px;
+        height: 26px;
+    }
+}
+
 .viber-float:hover .viber-float-icon {
     background: #8b7ce8;
     box-shadow: 0 4px 24px rgba(115, 96, 242, 0.6);
@@ -1256,6 +1317,22 @@ body.modal-open {
     background: rgba(232, 184, 109, 0.15);
 }
 
+/* Планшет і менше: фото товару в модалці в повний рост */
+@media (max-width: 1024px) {
+    .modal-image-main {
+        min-height: 50vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .modal-image-main img {
+        width: 100%;
+        max-height: 70vh;
+        object-fit: contain;
+        object-position: center;
+    }
+}
+
 @media (max-width: 768px) {
     .modal-body {
         grid-template-columns: 1fr;
@@ -1263,6 +1340,12 @@ body.modal-open {
             "image"
             "thumbs"
             "info";
+    }
+    .modal-image-main {
+        min-height: 55vh;
+    }
+    .modal-image-main img {
+        max-height: 65vh;
     }
 }
 
