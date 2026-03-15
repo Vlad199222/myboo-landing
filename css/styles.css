@@ -1202,6 +1202,30 @@ body.modal-open {
     }
 }
 
+/* Крестик закриття кошика — завжди видимий, не зникає при прокрутці */
+.checkout-backdrop .modal-close {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 201;
+    width: 44px;
+    height: 44px;
+    background: #c62828;
+    color: #fff;
+    box-shadow: 0 2px 12px rgba(198, 40, 40, 0.5);
+}
+.checkout-backdrop .modal-close:hover {
+    background: #e53935;
+}
+@media (max-width: 768px) {
+    .checkout-backdrop .modal-close {
+        top: 0.75rem;
+        right: 0.75rem;
+        width: 40px;
+        height: 40px;
+        font-size: 1.4rem;
+    }
+}
 
 .modal-body {
     display: grid;
@@ -1384,6 +1408,7 @@ body.modal-open {
 /* === Checkout modal === */
 .checkout-modal {
     max-width: 900px;
+    padding-top: 3.25rem;
 }
 
 .checkout-cart-view .checkout-header,
@@ -1480,10 +1505,32 @@ body.modal-open {
 }
 
 .checkout-item-in-form {
-    grid-template-columns: 32px 1fr auto;
+    grid-template-columns: 32px 1fr auto auto;
     gap: 0.5rem;
     padding-bottom: 0.35rem;
     padding-top: 0.25rem;
+}
+
+.checkout-item-remove-in-form {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 107, 53, 0.25);
+    color: #ff6b35;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+}
+.checkout-item-remove-in-form:hover {
+    background: #ff6b35;
+    color: #fff;
 }
 
 .checkout-item-in-form .checkout-item-thumb img,

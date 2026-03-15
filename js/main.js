@@ -386,6 +386,7 @@ function renderCheckoutItems() {
                     <div class="checkout-item-meta">× ${item.quantity}</div>
                 </div>
                 <div class="checkout-item-price">${lineTotal.toFixed(0)} грн</div>
+                <button type="button" class="checkout-item-remove checkout-item-remove-in-form" data-remove-one="${index}" aria-label="Видалити з кошика">×</button>
             `;
             checkoutItemsFormEl.appendChild(rowForm);
         }
@@ -459,8 +460,8 @@ document.querySelector('[data-checkout-goto-form]')?.addEventListener('click', (
     }
 });
 
-// Видалити один товар з кошика в модалці оформлення
-checkoutItemsEl?.addEventListener('click', (e) => {
+// Видалити один товар з кошика в модалці оформлення (працює і в переліку кошика, і у формі «Замовити по знижці»)
+checkoutBackdrop?.addEventListener('click', (e) => {
     const btn = e.target.closest('[data-remove-one]');
     if (!btn) return;
     const index = parseInt(btn.getAttribute('data-remove-one'), 10);
