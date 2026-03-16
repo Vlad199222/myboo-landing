@@ -912,7 +912,7 @@ function renderProducts() {
             : product.name;
 
         const imageMarkup = product.image
-            ? `<img src="${escapeHtml(product.image)}" alt="${escapeHtml(fullName)}" class="product-main-img">`
+            ? `<img src="${escapeHtml(product.image)}" alt="${escapeHtml(fullName)}" class="product-main-img" loading="lazy">`
             : `<div class="product-placeholder">Фото скоро</div>`;
 
         article.innerHTML = `
