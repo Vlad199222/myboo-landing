@@ -38,7 +38,10 @@ async function build() {
   const cssPath = path.join(__dirname, 'css', 'styles.css');
   const cssOutPath = path.join(__dirname, 'css', 'styles.min.css');
   const cssCode = fs.readFileSync(cssPath, 'utf8');
-  const cssResult = new CleanCSS({ level: 2 }).minify(cssCode);
+  const cssResult = new CleanCSS({
+    level: 2,
+    format: { breaks: false }
+  }).minify(cssCode);
   if (cssResult.errors.length) throw new Error(cssResult.errors.join('; '));
   fs.writeFileSync(cssOutPath, cssResult.styles);
   console.log('css/styles.min.css');

@@ -24,15 +24,17 @@ let cart = loadCartFromStorage();
 
 const API_ORDERS = '/api/orders';
 
-// Инициализация при загрузке
+// Инициализация при загрузке: критичное сразу, остальное — в следующем кадре (меньше блокировка main thread)
 document.addEventListener('DOMContentLoaded', () => {
     renderProducts();
     bindProductEvents();
     updateCartCount();
     renderOrderSummary();
-    startCountdown();
-    initReviewsSlider();
-    initMessengerFloatToggle();
+    requestAnimationFrame(() => {
+        startCountdown();
+        initReviewsSlider();
+        initMessengerFloatToggle();
+    });
 });
 
 // Закрити / відкрити панель Viber + Telegram (хрестик ↔ стрілка)
@@ -191,12 +193,19 @@ function initReviewsSlider() {
     if (total === 0) return;
 
     let currentIndex = 0;
+    let cachedSlideWidth = 0;
+
+    function getSlideWidth() {
+        if (cachedSlideWidth > 0) return cachedSlideWidth;
+        cachedSlideWidth = slides[0].offsetWidth;
+        return cachedSlideWidth;
+    }
 
     function goTo(index) {
         if (index >= total) currentIndex = 0;
         else if (index < 0) currentIndex = total - 1;
         else currentIndex = index;
-        const slideWidth = slides[0].offsetWidth;
+        const slideWidth = getSlideWidth();
         const offsetPx = currentIndex * slideWidth;
         slider.style.transform = `translateX(-${offsetPx}px)`;
         dots.forEach((d, i) => d.classList.toggle('is-active', i === currentIndex));
@@ -212,7 +221,12 @@ function initReviewsSlider() {
     });
 
     const dots = dotsContainer.querySelectorAll('.reviews-dot');
-    goTo(0);
+    requestAnimationFrame(() => {
+        cachedSlideWidth = 0;
+        goTo(0);
+    });
+
+    window.addEventListener('resize', () => { cachedSlideWidth = 0; });
 
     prevBtn?.addEventListener('click', () => goTo(currentIndex - 1));
     nextBtn?.addEventListener('click', () => goTo(currentIndex + 1));
