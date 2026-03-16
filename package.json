@@ -5,13 +5,18 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "build": "node build.js"
   },
   "engines": {
     "node": ">=18"
   },
   "keywords": ["ecommerce", "landing", "express"],
   "license": "MIT",
+  "devDependencies": {
+    "clean-css": "^5.3.3",
+    "terser": "^5.27.0"
+  },
   "dependencies": {
     "compression": "^1.7.4",
     "cors": "^2.8.5",

@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const cors = require('cors');
 const compression = require('compression');
 const https = require('https');
@@ -12,6 +13,25 @@ const PORT = process.env.PORT || 3000;
 app.use(compression());
 app.use(cors());
 app.use(express.json());
+
+// У production віддавати мініфіковані CSS/JS для кращого PageSpeed
+if (process.env.NODE_ENV === 'production') {
+  app.get('/css/styles.css', (req, res, next) => {
+    const minPath = path.join(__dirname, 'css', 'styles.min.css');
+    if (fs.existsSync(minPath)) {
+      return res.sendFile(minPath, { maxAge: '1d' });
+    }
+    next();
+  });
+  app.get('/js/main.js', (req, res, next) => {
+    const minPath = path.join(__dirname, 'js', 'main.min.js');
+    if (fs.existsSync(minPath)) {
+      return res.sendFile(minPath, { maxAge: '1d' });
+    }
+    next();
+  });
+}
+
 app.use(express.static(path.join(__dirname), {
   maxAge: process.env.NODE_ENV === 'production' ? '1d' : 0,
   etag: true

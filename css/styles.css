@@ -714,14 +714,41 @@ img {
 
 .order-item-row {
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    gap: 0.5rem;
     font-size: 0.95rem;
     color: var(--color-text-muted);
 }
 
-.order-item-row span:last-child {
+.order-item-row span:nth-child(2) {
     color: var(--color-accent);
     font-weight: 500;
+}
+
+/* Крестик видалення товару в блоці «Ваш кошик» на сторінці */
+.order-item-remove {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgba(220, 53, 69, 0.25);
+    color: #dc3545;
+    font-size: 1.15rem;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+    flex-shrink: 0;
+}
+.order-item-remove:hover {
+    background: #dc3545;
+    color: #fff;
 }
 
 .order-total {
@@ -1505,31 +1532,34 @@ body.modal-open {
 }
 
 .checkout-item-in-form {
-    grid-template-columns: 32px 1fr auto auto;
+    grid-template-columns: 32px 1fr auto 36px;
     gap: 0.5rem;
     padding-bottom: 0.35rem;
     padding-top: 0.25rem;
 }
 
+/* Крестик видалення товару в блоці «У кошику» — завжди видимий, червоний */
 .checkout-item-remove-in-form {
-    width: 26px;
-    height: 26px;
-    min-width: 26px;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
     padding: 0;
     border: none;
     border-radius: 50%;
-    background: rgba(255, 107, 53, 0.25);
-    color: #ff6b35;
-    font-size: 1.1rem;
+    background: rgba(220, 53, 69, 0.25);
+    color: #dc3545;
+    font-size: 1.25rem;
+    font-weight: bold;
     line-height: 1;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: background 0.2s, color 0.2s;
+    flex-shrink: 0;
 }
 .checkout-item-remove-in-form:hover {
-    background: #ff6b35;
+    background: #dc3545;
     color: #fff;
 }
 
@@ -1611,28 +1641,34 @@ body.modal-open {
 
 .checkout-item {
     display: grid;
-    grid-template-columns: auto 1fr auto auto;
+    grid-template-columns: auto 1fr auto 36px;
     gap: 0.75rem;
     align-items: center;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/* Крестик видалення товару — завжди видимий, червоний */
 .checkout-item-remove {
     width: 32px;
     height: 32px;
+    min-width: 32px;
     border: none;
     border-radius: 50%;
-    background: rgba(255, 107, 53, 0.2);
-    color: #ff6b35;
+    background: rgba(220, 53, 69, 0.25);
+    color: #dc3545;
     font-size: 1.25rem;
+    font-weight: bold;
     line-height: 1;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: background 0.2s, color 0.2s;
 }
 
 .checkout-item-remove:hover {
-    background: #ff6b35;
+    background: #dc3545;
     color: #fff;
 }
 

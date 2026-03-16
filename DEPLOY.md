@@ -20,9 +20,9 @@
 1. Зареєструйтесь на [render.com](https://render.com).
 2. **New → Web Service**, підключіть репозиторій з проєктом.
 3. Налаштування:
-   - **Build Command:** `npm install`
+   - **Build Command:** `npm install && npm run build`
    - **Start Command:** `npm start`
-   - **Environment:** додайте змінні `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` (і за потреби `PORT` — Render сам задає порт).
+   - **Environment:** додайте змінні `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, а також `NODE_ENV=production` (щоб сервер віддавав мініфіковані CSS/JS для PageSpeed).
 4. Натисніть **Create Web Service**. Після збірки сайт буде доступний за посиланням типу `https://myboo-xxxx.onrender.com`.
 
 ---

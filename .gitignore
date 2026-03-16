@@ -6,6 +6,10 @@ node_modules/
 .env.local
 .env.*.local
 
+# Згенеровані при npm run build (створюються на хостингу)
+js/main.min.js
+css/styles.min.css
+
 # Логи та тимчасові файли
 *.log
 npm-debug.log*

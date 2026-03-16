@@ -137,10 +137,14 @@ function renderOrderSummary() {
     }
     if (emptyEl) emptyEl.style.display = 'none';
 
-    cart.forEach(item => {
+    cart.forEach((item, index) => {
         const row = document.createElement('div');
         row.className = 'order-item-row';
-        row.innerHTML = `<span>${item.name} × ${item.quantity}</span><span>${(item.price * item.quantity).toFixed(0)} грн</span>`;
+        row.innerHTML = `
+            <span>${escapeHtml(item.name)} × ${item.quantity}</span>
+            <span>${(item.price * item.quantity).toFixed(0)} грн</span>
+            <button type="button" class="order-item-remove" data-remove-one="${index}" aria-label="Видалити з кошика">×</button>
+        `;
         container.appendChild(row);
     });
 }
@@ -460,8 +464,8 @@ document.querySelector('[data-checkout-goto-form]')?.addEventListener('click', (
     }
 });
 
-// Видалити один товар з кошика в модалці оформлення (працює і в переліку кошика, і у формі «Замовити по знижці»)
-checkoutBackdrop?.addEventListener('click', (e) => {
+// Видалити один товар з кошика (працює в блоці «Ваш кошик» на сторінці та в модалці оформлення)
+document.addEventListener('click', (e) => {
     const btn = e.target.closest('[data-remove-one]');
     if (!btn) return;
     const index = parseInt(btn.getAttribute('data-remove-one'), 10);
@@ -471,7 +475,7 @@ checkoutBackdrop?.addEventListener('click', (e) => {
     updateCartCount();
     renderOrderSummary();
     renderCheckoutItems();
-    if (cart.length === 0) {
+    if (checkoutBackdrop && !checkoutBackdrop.hidden && cart.length === 0) {
         closeCheckoutModal();
         showToast('Кошик очищено.');
     } else {
@@ -663,7 +667,7 @@ const products = [
     category: "БОДІСТОКІНГИ",
     name: "Бодістокінг AnnaBell",
     image: "assets/bodystocking-black-1.png",
-    images: ["assets/bodystocking-black-1.png", "assets/bodystocking-black-2.png", "assets/bodystocking-black-3.png"],
+    images: ["assets/bodystocking-black-1.png", "assets/bodystocking-black-2.png", "assets/bodystocking-black-3.png", "assets/rozmiri.png"],
     color: "чорний",
     price: 250,
     sizes: ["XS","S","M","L","XL","2XL"],
@@ -679,7 +683,7 @@ const products = [
     category: "БОДІСТОКІНГИ",
     name: "Бодістокінг AnnaBell",
     image: "assets/bodystocking-1.png",
-    images: ["assets/bodystocking-1.png", "assets/bodystocking-2.png", "assets/bodystocking-3.png"],
+    images: ["assets/bodystocking-1.png", "assets/bodystocking-2.png", "assets/bodystocking-3.png", "assets/rozmiri.png"],
     color: "червоний",
     price: 250,
     sizes: ["XS","S","M","L","XL","2XL"],
@@ -695,7 +699,7 @@ const products = [
     category: "БОДІСТОКІНГИ",
     name: "Бодістокінг Kleopatra",
     image: "assets/Kleopatra.jpg",
-    images: ["assets/Kleopatra.jpg", "assets/Kleopatra2.jpg", "assets/Kleopatra3.jpg"],
+    images: ["assets/Kleopatra.jpg", "assets/Kleopatra2.jpg", "assets/Kleopatra3.jpg", "assets/rozmiri.png"],
     price: 330,
     sizes: ["XS","S","M","L","XL","2XL"],
     description: `Матеріал нейлон, ніжний на дотик і надзвичайно тягнеться.
@@ -710,7 +714,7 @@ const products = [
     category: "БОДІСТОКІНГИ",
     name: "Бодістокінг Leo",
     image: "assets/BodyLeo.jpg",
-    images: ["assets/BodyLeo.jpg", "assets/BodyLeo2.jpg", "assets/BodyLeo3.jpg"],
+    images: ["assets/BodyLeo.jpg", "assets/BodyLeo2.jpg", "assets/BodyLeo3.jpg", "assets/rozmiri.png"],
     price: 360,
     sizes: ["XS","S","M","L","XL","2XL"],
     description: `Матеріал нейлон, ніжний на дотик і добре тягнеться.
@@ -725,7 +729,7 @@ const products = [
     category: "БОДІСТОКІНГИ",
     name: "Бодістокінг Lily",
     image: "assets/BodyLilyChorniy.jpg",
-    images: ["assets/BodyLilyChorniy.jpg", "assets/BodyLilyChorniy2.jpg", "assets/BodyLilyChorniy3.png"],
+    images: ["assets/BodyLilyChorniy.jpg", "assets/BodyLilyChorniy2.jpg", "assets/BodyLilyChorniy3.png", "assets/rozmiri.png"],
     color: "чорний",
     price: 330,
     sizes: ["XS","S","M","L","XL","2XL"],
@@ -741,7 +745,7 @@ const products = [
     category: "БОДІСТОКІНГИ",
     name: "Бодістокінг Lily",
     image: "assets/BodyLilyBiliy.jpg",
-    images: ["assets/BodyLilyBiliy.jpg", "assets/BodyLiluBiliy2.jpg", "assets/BodyLilyBiliy3.jpg"],
+    images: ["assets/BodyLilyBiliy.jpg", "assets/BodyLiluBiliy2.jpg", "assets/BodyLilyBiliy3.jpg", "assets/rozmiri.png"],
     color: "білий",
     price: 330,
     sizes: ["XS","S","M","L","XL","2XL"],
@@ -757,7 +761,7 @@ const products = [
     category: "БОДІ",
     name: "Боді з відкритим доступом",
     image: "assets/BodyZDostupomChorne.jpg",
-    images: ["assets/BodyZDostupomChorne.jpg", "assets/BodyZDostupomChorne2.jpg", "assets/BodyZDostupomChorne3.webp"],
+    images: ["assets/BodyZDostupomChorne.jpg", "assets/BodyZDostupomChorne2.jpg", "assets/BodyZDostupomChorne3.webp", "assets/rozmiri.png"],
     color: "чорний",
     price: 330,
     sizes: ["S","M","L","XL"],
@@ -772,7 +776,7 @@ const products = [
     category: "БОДІ",
     name: "Боді з відкритим доступом",
     image: "assets/BodyZDostupomChervone.jpg",
-    images: ["assets/BodyZDostupomChervone.jpg", "assets/BodyZDostupomChervone2.webp", "assets/BodyZDostupomChervone3.jpg"],
+    images: ["assets/BodyZDostupomChervone.jpg", "assets/BodyZDostupomChervone2.webp", "assets/BodyZDostupomChervone3.jpg", "assets/rozmiri.png"],
     color: "червоний",
     price: 330,
     sizes: ["S","M","L","XL"],
@@ -787,7 +791,7 @@ const products = [
     category: "КОМПЛЕКТИ",
     name: "Комплект Bella",
     image: "assets/BodyBella.jpg",
-    images: ["assets/BodyBella.jpg", "assets/BodyBella2.jpg", "assets/BodyBella3.jpg"],
+    images: ["assets/BodyBella.jpg", "assets/BodyBella2.jpg", "assets/BodyBella3.jpg", "assets/rozmiri.png"],
     price: 410,
     sizes: ["XS","S","M","L","XL"],
     description: `Красивий комплект для особливих подій.
@@ -801,7 +805,7 @@ const products = [
     category: "КОМПЛЕКТИ",
     name: "Комплект Monica",    
     image: "assets/KomplektMonika.jpg",
-    images: ["assets/KomplektMonika.jpg", "assets/KomplektMonika2.jpg", "assets/KomplektMonika3.jpg"],
+    images: ["assets/KomplektMonika.jpg", "assets/KomplektMonika2.jpg", "assets/KomplektMonika3.jpg", "assets/rozmiri.png"],
     price: 400,
     sizes: ["XS","S","M","L"],
     description: `Красивий комплект для незабутніх моментів.
@@ -815,7 +819,7 @@ const products = [
     category: "ХАЛАТИ",
     name: "Халатик + трусики",
     image: "assets/XalatZKruzhevomSiniy.png",
-    images: ["assets/XalatZKruzhevomSiniy.png", "assets/XalatZKruzhevomSiniy2.png", "assets/XalatZKruzhevomSiniy3.png"],
+    images: ["assets/XalatZKruzhevomSiniy.png", "assets/XalatZKruzhevomSiniy2.png", "assets/XalatZKruzhevomSiniy3.png", "assets/rozmiri.png"],
     color: "синій",
     price: 270,
     sizes: ["XS","S","M","L","XL"],
@@ -829,7 +833,7 @@ const products = [
     category: "ХАЛАТИ",
     name: "Халатик + трусики",
     image: "assets/XalatZKruzhevomChervoni.png",
-    images: ["assets/XalatZKruzhevomChervoni.png", "assets/XalatZKruzhevomChervoni2.png"],
+    images: ["assets/XalatZKruzhevomChervoni.png", "assets/XalatZKruzhevomChervoni2.png", "assets/rozmiri.png"],
     color: "червоний",
     price: 270,
     sizes: ["XS","S","M","L","XL"],
@@ -843,7 +847,7 @@ const products = [
     category: "ХАЛАТИ",
     name: "Халатик + трусики",
     image: "assets/XalatPlusTrusikiChorni.jpg",
-    images: ["assets/XalatPlusTrusikiChorni.jpg", "assets/XalatPlusTrusikiChorni2.jpg", "assets/XalatPlusTrusikiChorni3.jpg"],
+    images: ["assets/XalatPlusTrusikiChorni.jpg", "assets/XalatPlusTrusikiChorni2.jpg", "assets/XalatPlusTrusikiChorni3.jpg", "assets/rozmiri.png"],
     color: "чорний",
     price: 310,
     sizes: ["XS","S","M","L"],
@@ -860,7 +864,7 @@ const products = [
     category: "ХАЛАТИ",
     name: "Халатик + трусики",
     image: "assets/XalatPlusTrusikiChervoni.jpg",
-    images: ["assets/XalatPlusTrusikiChervoni.jpg", "assets/XalatPlusTrusikiChervoni2.jpg", "assets/XalatPlusTrusikiChervoni3.jpg"],
+    images: ["assets/XalatPlusTrusikiChervoni.jpg", "assets/XalatPlusTrusikiChervoni2.jpg", "assets/XalatPlusTrusikiChervoni3.jpg", "assets/rozmiri.png"],
     color: "червоний",
     price: 310,
     sizes: ["XS","S","M","L"],
@@ -877,7 +881,7 @@ const products = [
     category: "БОДІ",
     name: "Боді з доступом чорне",
     image: "assets/BodyZDostupomChorne2.jpg",
-    images: ["assets/BodyZDostupomChorne2.jpg"],
+    images: ["assets/BodyZDostupomChorne2.jpg", "assets/rozmiri.png"],
     color: "чорне",
     price: 360,
     sizes: ["80B", "80C", "80D", "80E", "85B", "85C", "85D", "85E", "90B", "90C", "90D", "90E"],
@@ -912,7 +916,7 @@ function renderProducts() {
             : product.name;
 
         const imageMarkup = product.image
-            ? `<img src="${escapeHtml(product.image)}" alt="${escapeHtml(fullName)}" class="product-main-img" loading="lazy">`
+            ? `<img src="${escapeHtml(product.image)}" alt="${escapeHtml(fullName)}" class="product-main-img" loading="lazy" width="400" height="400">`
             : `<div class="product-placeholder">Фото скоро</div>`;
 
         article.innerHTML = `
