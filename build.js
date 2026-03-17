@@ -1,7 +1,7 @@
 /**
  * Мініфікація CSS і JS для production (PageSpeed).
- * Запуск: npm run build
- * На Render у Build Command додайте: npm run build
+ * PurgeCSS видаляє невикористаний CSS (~2 КіБ економії для Lighthouse).
+ * Запуск: npm run build | На Render: npm run build
  */
 const fs = require('fs');
 const path = require('path');
@@ -27,6 +27,34 @@ async function build() {
   fs.writeFileSync(jsOutPath, jsResult.code);
   console.log('js/main.min.js');
 
+  const cssPath = path.join(__dirname, 'css', 'styles.css');
+  const cssOutPath = path.join(__dirname, 'css', 'styles.min.css');
+  let cssCode = fs.readFileSync(cssPath, 'utf8');
+
+  // Видалення невикористаного CSS (PurgeCSS) — економія ~2 КіБ для Lighthouse
+  let PurgeCSS;
+  try {
+    PurgeCSS = require('purgecss').PurgeCSS;
+  } catch (e) {
+    console.warn('purgecss не встановлено — пропускаємо purge. npm install --save-dev purgecss');
+  }
+  if (PurgeCSS) {
+    const content = [
+      path.join(__dirname, 'index.html'),
+      path.join(__dirname, 'js', 'main.js')
+    ].filter((f) => fs.existsSync(f));
+    const purgeResult = await new PurgeCSS().purge({
+      content: content.map((f) => ({ raw: fs.readFileSync(f, 'utf8'), extension: path.extname(f).slice(1) })),
+      css: [{ raw: cssCode }],
+      safelist: [
+        'is-active', 'is-closed', 'modal-open', 'toast',
+        /^modal-/, /^checkout-/, /^order-item/, /^product-/, /^reviews-/, /checkout-form-view--no-cart/
+      ]
+    });
+    if (purgeResult[0] && purgeResult[0].css) cssCode = purgeResult[0].css;
+    console.log('css purged');
+  }
+
   // Мініфікація CSS (clean-css)
   let CleanCSS;
   try {
@@ -35,9 +63,6 @@ async function build() {
     console.warn('clean-css не встановлено. Запустіть: npm install --save-dev clean-css');
     return;
   }
-  const cssPath = path.join(__dirname, 'css', 'styles.css');
-  const cssOutPath = path.join(__dirname, 'css', 'styles.min.css');
-  const cssCode = fs.readFileSync(cssPath, 'utf8');
   const cssResult = new CleanCSS({
     level: 2,
     format: { breaks: false }
