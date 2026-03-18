@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,9 +18,11 @@
             padding: 4rem 2rem;
             text-align: center;
         }
+
         .thank-you-box {
             max-width: 420px;
         }
+
         .thank-you-icon {
             width: 80px;
             height: 80px;
@@ -32,22 +35,26 @@
             font-size: 2.5rem;
             color: var(--color-accent);
         }
+
         .thank-you-page h1 {
             font-size: 1.75rem;
             margin-bottom: 0.75rem;
             color: var(--color-text);
         }
+
         .thank-you-page p {
             color: var(--color-text-muted);
             margin-bottom: 1.5rem;
             line-height: 1.5;
         }
+
         .thank-you-order-id {
             font-size: 0.95rem;
             color: var(--color-accent);
             font-weight: 500;
             margin-bottom: 2rem;
         }
+
         .thank-you-page .btn-back {
             display: inline-block;
             padding: 0.75rem 1.5rem;
@@ -58,9 +65,11 @@
             font-weight: 600;
             transition: opacity 0.2s;
         }
+
         .thank-you-page .btn-back:hover {
             opacity: 0.9;
         }
+
         .thank-you-back-link {
             display: inline-flex;
             align-items: center;
@@ -70,33 +79,38 @@
             margin-bottom: 2rem;
             font-weight: 500;
         }
+
         .thank-you-back-link:hover {
             text-decoration: underline;
         }
+
         .thank-you-back-link svg {
             width: 20px;
             height: 20px;
         }
     </style>
     <!-- Meta Pixel Code -->
-<script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1395086841670569');
-    fbq('track', 'PageView');
-    fbq('track', 'Lead');
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1395086841670569');
+        fbq('track', 'PageView');
+        fbq('track', 'Lead');
     </script>
     <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1395086841670569&ev=PageView&noscript=1"
-    /></noscript>
+            src="https://www.facebook.com/tr?id=1395086841670569&ev=PageView&noscript=1" /></noscript>
     <!-- End Meta Pixel Code -->
 </head>
+
 <body>
     <header class="header">
         <nav class="nav">
@@ -116,7 +130,7 @@
         <div class="thank-you-box">
             <a href="index.html" class="thank-you-back-link" aria-label="На головну">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
                 </svg>
                 На головну
             </a>
@@ -144,20 +158,26 @@
     </footer>
 
     <script>
-        (function() {
+        (function () {
             var params = new URLSearchParams(window.location.search);
             var orderId = params.get('orderId');
             var el = document.getElementById('thank-you-order-id');
             if (el && orderId) el.textContent = 'Номер замовлення: №' + orderId;
         })();
     </script>
+
     <script>
-        window.addEventListener('load', function () {
-          if (typeof fbq === 'function') {
-            fbq('track', 'Lead');
-            console.log('LEAD FIRED');
-          }
-        });
-        </script>
+        window.onload = function () {
+            setTimeout(function () {
+                if (typeof fbq === 'function') {
+                    fbq('track', 'Lead');
+                    console.log('LEAD SENT');
+                } else {
+                    console.log('FBQ NOT FOUND');
+                }
+            }, 1000);
+        };
+    </script>
 </body>
+
 </html>
