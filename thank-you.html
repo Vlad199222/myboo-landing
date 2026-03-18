@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дякуємо за замовлення — MyBoo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css?v=2">
+    <style>
+        .thank-you-page {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .thank-you-box {
+            max-width: 420px;
+        }
+        .thank-you-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: rgba(232, 184, 109, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--color-accent);
+        }
+        .thank-you-page h1 {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+            color: var(--color-text);
+        }
+        .thank-you-page p {
+            color: var(--color-text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+        .thank-you-order-id {
+            font-size: 0.95rem;
+            color: var(--color-accent);
+            font-weight: 500;
+            margin-bottom: 2rem;
+        }
+        .thank-you-page .btn-back {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--color-accent);
+            color: #0f0f0f;
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+        .thank-you-page .btn-back:hover {
+            opacity: 0.9;
+        }
+        .thank-you-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--color-accent);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+        .thank-you-back-link:hover {
+            text-decoration: underline;
+        }
+        .thank-you-back-link svg {
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+    <!-- Meta Pixel Code -->
+<script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1395086841670569');
+    fbq('track', 'PageView');
+    fbq('track', 'Lead');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1395086841670569&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-left">
+                <a href="index.html" class="logo">MyBoo</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html#hero">Головна</a></li>
+                <li><a href="index.html#products">Товари</a></li>
+                <li><a href="index.html#reviews">Відгуки</a></li>
+                <li><a href="index.html#howto">Як замовити</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="thank-you-page">
+        <div class="thank-you-box">
+            <a href="index.html" class="thank-you-back-link" aria-label="На головну">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                На головну
+            </a>
+            <div class="thank-you-icon" aria-hidden="true">✓</div>
+            <h1>Дякуємо за замовлення!</h1>
+            <p>Ми отримали ваше замовлення і незабаром зв'яжемося з вами для підтвердження та узгодження доставки.</p>
+            <p id="thank-you-order-id" class="thank-you-order-id"></p>
+            <a href="index.html#products" class="btn-back">Повернутися до каталогу</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">MyBoo</a>
+                <p>© 2025 MyBoo. Жіноча білизна. Усі права захищені.</p>
+            </div>
+            <div class="footer-links">
+                <a href="privacy-policy.html">Політика конфіденційності</a>
+                <a href="terms.html">Умови використання</a>
+                <a href="shipping.html">Доставка та оплата</a>
+                <a href="return-policy.html">Повернення та обмін</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            var params = new URLSearchParams(window.location.search);
+            var orderId = params.get('orderId');
+            var el = document.getElementById('thank-you-order-id');
+            if (el && orderId) el.textContent = 'Номер замовлення: №' + orderId;
+        })();
+    </script>
+</body>
+</html>

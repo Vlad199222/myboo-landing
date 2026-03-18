@@ -596,13 +596,14 @@ document.querySelector('[data-order-form]')?.addEventListener('submit', async (e
         const data = await res.json();
 
         if (data.success) {
-            if (msgEl) { msgEl.textContent = 'Замовлення №' + (data.orderId || '') + ' прийнято. Дякуємо!'; msgEl.dataset.state = 'success'; }
             cart.length = 0;
             saveCartToStorage();
             updateCartCount();
             renderOrderSummary();
             form.reset();
-            showToast('Замовлення успішно надіслано!');
+            const orderId = data.orderId || '';
+            window.location.href = 'thank-you.html' + (orderId ? '?orderId=' + encodeURIComponent(orderId) : '');
+            return;
         } else {
             if (msgEl) { msgEl.textContent = data.error || 'Помилка відправки.'; msgEl.dataset.state = 'error'; }
         }
@@ -647,15 +648,15 @@ document.querySelector('[data-checkout-form]')?.addEventListener('submit', async
         });
         const data = await res.json();
         if (data.success) {
-            checkoutMessageEl.textContent = 'Замовлення прийнято! Дякуємо.';
-            checkoutMessageEl.dataset.state = 'success';
             cart.length = 0;
             saveCartToStorage();
             updateCartCount();
             renderOrderSummary();
             form.reset();
-            showToast('Замовлення успішно надіслано!');
-            setTimeout(() => closeCheckoutModal(), 1200);
+            closeCheckoutModal();
+            const orderId = data.orderId || '';
+            window.location.href = 'thank-you.html' + (orderId ? '?orderId=' + encodeURIComponent(orderId) : '');
+            return;
         } else {
             checkoutMessageEl.textContent = data.error || 'Помилка відправки.';
             checkoutMessageEl.dataset.state = 'error';
