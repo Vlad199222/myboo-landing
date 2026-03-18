@@ -151,5 +151,13 @@
             if (el && orderId) el.textContent = 'Номер замовлення: №' + orderId;
         })();
     </script>
+    <script>
+        window.addEventListener('load', function () {
+          if (typeof fbq === 'function') {
+            fbq('track', 'Lead');
+            console.log('LEAD FIRED');
+          }
+        });
+        </script>
 </body>
 </html>
