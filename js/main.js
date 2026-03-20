@@ -301,11 +301,17 @@ function openProductModal(productId) {
     if (modalPrice) modalPrice.textContent = `${product.price} грн`;
 
     if (product.image) {
-        modalMainImage.src = product.image;
+        const webpSrc = getWebpSrc(product.image);
+        modalMainImage.src = webpSrc;
+        modalMainImage.onerror = () => {
+            modalMainImage.onerror = null;
+            modalMainImage.src = product.image; // fallback на PNG/JPG
+        };
         modalMainImage.alt = fullName;
         modalMainImage.style.display = 'block';
     } else {
         modalMainImage.removeAttribute('src');
+        modalMainImage.onerror = null;
         modalMainImage.alt = fullName;
         modalMainImage.style.display = 'none';
     }
@@ -318,7 +324,8 @@ function openProductModal(productId) {
             btn.type = 'button';
             btn.className = 'modal-thumb' + (i === 0 ? ' is-active' : '');
             btn.setAttribute('data-modal-thumb', src);
-            btn.innerHTML = `<img src="${escapeHtml(src)}" alt="">`;
+            const webpSrc = getWebpSrc(src);
+            btn.innerHTML = `<img src="${escapeHtml(webpSrc)}" data-fallback="${escapeHtml(src)}" onerror="this.onerror=null;this.src=this.dataset.fallback;" alt="">`;
             modalThumbs.appendChild(btn);
         });
     }
@@ -362,7 +369,12 @@ document.querySelector('[data-modal-backdrop]')?.addEventListener('click', (e) =
     if (!btn || !modalMainImage) return;
     const src = btn.getAttribute('data-modal-thumb');
     if (!src) return;
-    modalMainImage.src = src;
+    const webpSrc = getWebpSrc(src);
+    modalMainImage.src = webpSrc;
+    modalMainImage.onerror = () => {
+        modalMainImage.onerror = null;
+        modalMainImage.src = src;
+    };
     btn.closest('.modal-thumbs')?.querySelectorAll('.modal-thumb').forEach(t => t.classList.remove('is-active'));
     btn.classList.add('is-active');
 });
@@ -380,7 +392,7 @@ function renderCheckoutItems() {
         row.innerHTML = `
             <div class="checkout-item-thumb">
             ${item.image
-                ? `<img src="${escapeHtml(item.image)}" alt="">`
+                ? `<img src="${escapeHtml(getWebpSrc(item.image))}" data-fallback="${escapeHtml(item.image)}" onerror="this.onerror=null;this.src=this.dataset.fallback;" alt="">`
                 : `<div class="product-placeholder">Фото</div>`
             }
             </div>
@@ -397,7 +409,7 @@ function renderCheckoutItems() {
             rowForm.className = 'checkout-item checkout-item-in-form';
             rowForm.innerHTML = `
                 <div class="checkout-item-thumb">
-                ${item.image ? `<img src="${escapeHtml(item.image)}" alt="">` : `<div class="product-placeholder">Фото</div>`}
+                ${item.image ? `<img src="${escapeHtml(getWebpSrc(item.image))}" data-fallback="${escapeHtml(item.image)}" onerror="this.onerror=null;this.src=this.dataset.fallback;" alt="">` : `<div class="product-placeholder">Фото</div>`}
                 </div>
                 <div class="checkout-item-info">
                     <div class="checkout-item-name">${escapeHtml(item.name)}</div>
@@ -915,6 +927,11 @@ function escapeHtml(str = '') {
         .replaceAll("'", '&#039;');
 }
 
+function getWebpSrc(src = '') {
+    // Если исходник .png/.jpg, пробуем подменить на .webp
+    return String(src).replace(/\.(png|jpe?g)$/i, '.webp');
+}
+
 function renderProducts() {
     const grid = document.querySelector('[data-products-grid]');
     if (!grid) return;
@@ -931,7 +948,7 @@ function renderProducts() {
             : product.name;
 
         const imageMarkup = product.image
-            ? `<img src="${escapeHtml(product.image)}" alt="${escapeHtml(fullName)}" class="product-main-img" loading="lazy" width="400" height="400">`
+            ? `<img src="${escapeHtml(getWebpSrc(product.image))}" data-fallback="${escapeHtml(product.image)}" onerror="this.onerror=null;this.src=this.dataset.fallback;" alt="${escapeHtml(fullName)}" class="product-main-img" loading="lazy" width="400" height="400">`
             : `<div class="product-placeholder">Фото скоро</div>`;
 
         article.innerHTML = `

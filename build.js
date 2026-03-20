@@ -92,6 +92,43 @@ async function build() {
     if (fs.existsSync(src)) fs.cpSync(src, dst, { recursive: true });
   });
 
+  // Генерируем WebP из PNG/JPG (если установлен sharp)
+  // JS будет пытаться грузить .webp и откатываться на оригинал по onerror.
+  try {
+    const sharp = require('sharp');
+    const assetsDir = path.join(publicDir, 'assets');
+
+    async function walk(dir) {
+      const entries = fs.readdirSync(dir, { withFileTypes: true });
+      for (const entry of entries) {
+        const fullPath = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+          await walk(fullPath);
+          continue;
+        }
+
+        const lower = entry.name.toLowerCase();
+        const isJpeg = lower.endsWith('.jpg') || lower.endsWith('.jpeg');
+        const isPng = lower.endsWith('.png');
+        if (!isJpeg && !isPng) continue;
+
+        const outPath = fullPath.replace(/\.(png|jpe?g)$/i, '.webp');
+        if (fs.existsSync(outPath)) continue;
+
+        await sharp(fullPath)
+          .webp({ quality: 82 })
+          .toFile(outPath);
+      }
+    }
+
+    if (fs.existsSync(assetsDir)) {
+      await walk(assetsDir);
+      console.log('webp generated');
+    }
+  } catch (e) {
+    console.warn('sharp не встановлено або webp генерація пропущена:', e && e.message ? e.message : e);
+  }
+
   console.log('public/ ready');
 
   console.log('Build done.');
