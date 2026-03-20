@@ -71,6 +71,29 @@ async function build() {
   fs.writeFileSync(cssOutPath, cssResult.styles);
   console.log('css/styles.min.css');
 
+  // Копируем статику в папку public/ — так Vercel будет отдавать CSS/JS
+  // (и попутно API routes в папке api/ останутся функциями).
+  const publicDir = path.join(__dirname, 'public');
+  if (fs.existsSync(publicDir)) {
+    fs.rmSync(publicDir, { recursive: true, force: true });
+  }
+  fs.mkdirSync(publicDir, { recursive: true });
+
+  // Копируем все *.html из корня проекта
+  const htmlFiles = fs.readdirSync(__dirname).filter((f) => f.endsWith('.html'));
+  htmlFiles.forEach((f) => {
+    fs.cpSync(path.join(__dirname, f), path.join(publicDir, f));
+  });
+
+  // Копируем папки со статикой
+  ['css', 'js', 'assets'].forEach((dir) => {
+    const src = path.join(__dirname, dir);
+    const dst = path.join(publicDir, dir);
+    if (fs.existsSync(src)) fs.cpSync(src, dst, { recursive: true });
+  });
+
+  console.log('public/ ready');
+
   console.log('Build done.');
 }
 

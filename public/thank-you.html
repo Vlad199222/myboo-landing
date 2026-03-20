@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дякуємо за замовлення — MyBoo</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css?v=2">
+
+    <style>
+        .thank-you-page {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .thank-you-box {
+            max-width: 420px;
+        }
+
+        .thank-you-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: rgba(232, 184, 109, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--color-accent);
+        }
+
+        .thank-you-page h1 {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .thank-you-page p {
+            margin-bottom: 1.5rem;
+        }
+
+        .thank-you-order-id {
+            font-size: 0.95rem;
+            color: var(--color-accent);
+            font-weight: 500;
+            margin-bottom: 2rem;
+        }
+
+        .btn-back {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--color-accent);
+            color: #000;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .thank-you-telegram {
+            margin-top: 1rem;
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+        .thank-you-telegram a {
+            color: var(--color-accent);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .thank-you-telegram a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    <!-- Meta Pixel -->
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n; n.loaded = true; n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e); t.async = true;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+
+        fbq('init', '1395086841670569');
+        fbq('track', 'PageView');
+    </script>
+
+    <noscript>
+        <img height="1" width="1" style="display:none"
+             src="https://www.facebook.com/tr?id=1395086841670569&ev=PageView&noscript=1" />
+    </noscript>
+</head>
+
+<body>
+
+    <main class="thank-you-page">
+        <div class="thank-you-box">
+
+            <div class="thank-you-icon">✓</div>
+
+            <h1>Дякуємо за замовлення!</h1>
+
+            <p>
+                Ми отримали ваше замовлення і незабаром зв'яжемося з вами для підтвердження та узгодження доставки.
+            </p>
+
+            <p id="order-id" class="thank-you-order-id"></p>
+
+            <a href="index.html" class="btn-back">Повернутися на сайт</a>
+            <p class="thank-you-telegram">Telegram для зв'язку: <a href="https://t.me/dasha_sh30" target="_blank" rel="noopener noreferrer">@dasha_sh30</a></p>
+
+        </div>
+    </main>
+
+    <!-- Order ID -->
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const orderId = params.get('orderId');
+        if (orderId) {
+            document.getElementById('order-id').innerText = 'Номер замовлення: №' + orderId;
+        }
+    </script>
+
+    <!-- Lead Event -->
+    <script>
+        window.onload = function () {
+            setTimeout(function () {
+                if (typeof fbq === 'function') {
+                    fbq('track', 'Lead');
+                    console.log('LEAD SENT');
+                } else {
+                    console.log('FBQ NOT FOUND');
+                }
+            }, 1000);
+        };
+    </script>
+
+</body>
+
+</html>
