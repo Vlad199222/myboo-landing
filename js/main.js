@@ -696,7 +696,7 @@ const products = [
     image: "assets/bodystocking-black-1.png",
     images: ["assets/bodystocking-black-1.png", "assets/bodystocking-black-2.png", "assets/bodystocking-black-3.png", "assets/rozmiri.png"],
     color: "чорний",
-    price: 250,
+    price: 300,
     sizes: ["XS","S","M","L","XL","2XL"],
     description: `Розмір універсальний, дуже еластичний матеріал.
     Підійде на XS, S, M, L, XL, 2XL.
@@ -712,7 +712,7 @@ const products = [
     image: "assets/bodystocking-1.png",
     images: ["assets/bodystocking-1.png", "assets/bodystocking-2.png", "assets/bodystocking-3.png", "assets/rozmiri.png"],
     color: "червоний",
-    price: 250,
+    price: 300,
     sizes: ["XS","S","M","L","XL","2XL"],
     description: `Розмір універсальний, дуже еластичний матеріал.
     Підійде на XS, S, M, L, XL, 2XL.
@@ -727,7 +727,7 @@ const products = [
     name: "Бодістокінг Kleopatra",
     image: "assets/Kleopatra.jpg",
     images: ["assets/Kleopatra.jpg", "assets/Kleopatra2.jpg", "assets/Kleopatra3.jpg", "assets/rozmiri.png"],
-    price: 330,
+    price: 380,
     sizes: ["XS","S","M","L","XL","2XL"],
     description: `Матеріал нейлон, ніжний на дотик і надзвичайно тягнеться.
     Приймає форму тіла.
@@ -742,7 +742,7 @@ const products = [
     name: "Бодістокінг Leo",
     image: "assets/BodyLeo.jpg",
     images: ["assets/BodyLeo.jpg", "assets/BodyLeo2.jpg", "assets/BodyLeo3.jpg", "assets/rozmiri.png"],
-    price: 360,
+    price: 410,
     sizes: ["XS","S","M","L","XL","2XL"],
     description: `Матеріал нейлон, ніжний на дотик і добре тягнеться.
     Приймає форму тіла.
@@ -758,7 +758,7 @@ const products = [
     image: "assets/BodyLilyChorniy.jpg",
     images: ["assets/BodyLilyChorniy.jpg", "assets/BodyLilyChorniy2.jpg", "assets/BodyLilyChorniy3.png", "assets/rozmiri.png"],
     color: "чорний",
-    price: 330,
+    price: 380,
     sizes: ["XS","S","M","L","XL","2XL"],
     description: `Матеріал нейлон, ніжний на дотик і дуже еластичний.
     Приймає форму тіла.
@@ -774,7 +774,7 @@ const products = [
     image: "assets/BodyLilyBiliy.jpg",
     images: ["assets/BodyLilyBiliy.jpg", "assets/BodyLiluBiliy2.jpg", "assets/BodyLilyBiliy3.jpg", "assets/rozmiri.png"],
     color: "білий",
-    price: 330,
+    price: 380,
     sizes: ["XS","S","M","L","XL","2XL"],
     description: `Матеріал нейлон, ніжний на дотик і дуже еластичний.
     Приймає форму тіла.
@@ -790,7 +790,7 @@ const products = [
     image: "assets/BodyZDostupomChorne.jpg",
     images: ["assets/BodyZDostupomChorne.jpg", "assets/BodyZDostupomChorne2.jpg", "assets/BodyZDostupomChorne3.webp", "assets/rozmiri.png"],
     color: "чорний",
-    price: 330,
+    price: 380,
     sizes: ["S","M","L","XL"],
     description: `Неймовірно чарівний боді з відкритим доступом.
     Створений для незабутніх ночей.
@@ -805,7 +805,7 @@ const products = [
     image: "assets/BodyZDostupomChervone.jpg",
     images: ["assets/BodyZDostupomChervone.jpg", "assets/BodyZDostupomChervone2.webp", "assets/BodyZDostupomChervone3.jpg", "assets/rozmiri.png"],
     color: "червоний",
-    price: 330,
+    price: 380,
     sizes: ["S","M","L","XL"],
     description: `Неймовірно чарівний боді з відкритим доступом.
     Створений для незабутніх ночей.
@@ -819,7 +819,7 @@ const products = [
     name: "Комплект Bella",
     image: "assets/BodyBella.jpg",
     images: ["assets/BodyBella.jpg", "assets/BodyBella2.jpg", "assets/BodyBella3.jpg", "assets/rozmiri.png"],
-    price: 410,
+    price: 460,
     sizes: ["XS","S","M","L","XL"],
     description: `Красивий комплект для особливих подій.
     Матеріал нейлон, ніжний на дотик і добре тягнеться.
@@ -833,7 +833,7 @@ const products = [
     name: "Комплект Monica",    
     image: "assets/KomplektMonika.jpg",
     images: ["assets/KomplektMonika.jpg", "assets/KomplektMonika2.jpg", "assets/KomplektMonika3.jpg", "assets/rozmiri.png"],
-    price: 400,
+    price: 450,
     sizes: ["XS","S","M","L"],
     description: `Красивий комплект для незабутніх моментів.
     Матеріал нейлон, добре тягнеться.
@@ -848,7 +848,7 @@ const products = [
     image: "assets/XalatZKruzhevomSiniy.png",
     images: ["assets/XalatZKruzhevomSiniy.png", "assets/XalatZKruzhevomSiniy2.png", "assets/XalatZKruzhevomSiniy3.png", "assets/rozmiri.png"],
     color: "синій",
-    price: 270,
+    price: 320,
     sizes: ["XS","S","M","L","XL"],
     description: `Короткий халат з поясом.
     На плечах і спині вставки з прозорого мережива.
@@ -862,7 +862,7 @@ const products = [
     image: "assets/XalatZKruzhevomChervoni.png",
     images: ["assets/XalatZKruzhevomChervoni.png", "assets/XalatZKruzhevomChervoni2.png", "assets/rozmiri.png"],
     color: "червоний",
-    price: 270,
+    price: 320,
     sizes: ["XS","S","M","L","XL"],
     description: `Короткий халат з поясом.
     На плечах і спині вставки з прозорого мережива.
@@ -876,7 +876,7 @@ const products = [
     image: "assets/XalatPlusTrusikiChorni.jpg",
     images: ["assets/XalatPlusTrusikiChorni.jpg", "assets/XalatPlusTrusikiChorni2.jpg", "assets/XalatPlusTrusikiChorni3.jpg", "assets/rozmiri.png"],
     color: "чорний",
-    price: 310,
+    price: 360,
     sizes: ["XS","S","M","L"],
     description: `Елегантний напівпрозорий халатик.
     Підкреслює силует.
@@ -893,7 +893,7 @@ const products = [
     image: "assets/XalatPlusTrusikiChervoni.jpg",
     images: ["assets/XalatPlusTrusikiChervoni.jpg", "assets/XalatPlusTrusikiChervoni2.jpg", "assets/XalatPlusTrusikiChervoni3.jpg", "assets/rozmiri.png"],
     color: "червоний",
-    price: 310,
+    price: 360,
     sizes: ["XS","S","M","L"],
     description: `Елегантний напівпрозорий халатик.
     Підкреслює силует.
@@ -910,7 +910,7 @@ const products = [
     image: "assets/BodyZDostupomChorne2.jpg",
     images: ["assets/BodyZDostupomChorne2.jpg", "assets/rozmiri.png"],
     color: "чорне",
-    price: 360,
+    price: 410,
     sizes: ["80B", "80C", "80D", "80E", "85B", "85C", "85D", "85E", "90B", "90C", "90D", "90E"],
     description: `Боді з відкритим вирізом знизу. Зручне для годування. М'який пуш-ап. Можна носити з костюмом або окремо.`
     }
