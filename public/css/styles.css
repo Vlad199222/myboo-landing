@@ -518,7 +518,7 @@ img {
 }
 
 .product-price-old {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     color: var(--color-text-muted);
     text-decoration: line-through;
 }
@@ -528,7 +528,7 @@ img {
 }
 
 .modal-price-row .product-price-old.modal-price-old {
-    font-size: 1rem;
+    font-size: 1.15rem;
 }
 
 .product-badge {
