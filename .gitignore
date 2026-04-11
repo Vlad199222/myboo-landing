@@ -10,9 +10,6 @@ node_modules/
 js/main.min.js
 css/styles.min.css
 
-# Згенеровані WebP (можуть бути створені на хостингу під час build)
-public/assets/**/*.webp
-
 # Логи та тимчасові файли
 *.log
 npm-debug.log*

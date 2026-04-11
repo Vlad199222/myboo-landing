@@ -301,12 +301,7 @@ function openProductModal(productId) {
     if (modalPrice) modalPrice.textContent = `${product.price} грн`;
 
     if (product.image) {
-        const webpSrc = getWebpSrc(product.image);
-        modalMainImage.src = webpSrc;
-        modalMainImage.onerror = () => {
-            modalMainImage.onerror = null;
-            modalMainImage.src = product.image; // fallback на PNG/JPG
-        };
+        attachImgFallbackChain(modalMainImage, imageSrcCandidates(product.image, product));
         modalMainImage.alt = fullName;
         modalMainImage.style.display = 'block';
     } else {
@@ -324,8 +319,10 @@ function openProductModal(productId) {
             btn.type = 'button';
             btn.className = 'modal-thumb' + (i === 0 ? ' is-active' : '');
             btn.setAttribute('data-modal-thumb', src);
-            const webpSrc = getWebpSrc(src);
-            btn.innerHTML = `<img src="${escapeHtml(webpSrc)}" data-fallback="${escapeHtml(src)}" onerror="this.onerror=null;this.src=this.dataset.fallback;" alt="">`;
+            const thumbImg = document.createElement('img');
+            thumbImg.alt = '';
+            attachImgFallbackChain(thumbImg, imageSrcCandidates(src, product));
+            btn.appendChild(thumbImg);
             modalThumbs.appendChild(btn);
         });
     }
@@ -369,12 +366,8 @@ document.querySelector('[data-modal-backdrop]')?.addEventListener('click', (e) =
     if (!btn || !modalMainImage) return;
     const src = btn.getAttribute('data-modal-thumb');
     if (!src) return;
-    const webpSrc = getWebpSrc(src);
-    modalMainImage.src = webpSrc;
-    modalMainImage.onerror = () => {
-        modalMainImage.onerror = null;
-        modalMainImage.src = src;
-    };
+    const product = products.find((item) => String(item.id) === String(currentProductId));
+    attachImgFallbackChain(modalMainImage, imageSrcCandidates(src, product));
     btn.closest('.modal-thumbs')?.querySelectorAll('.modal-thumb').forEach(t => t.classList.remove('is-active'));
     btn.classList.add('is-active');
 });
@@ -392,7 +385,7 @@ function renderCheckoutItems() {
         row.innerHTML = `
             <div class="checkout-item-thumb">
             ${item.image
-                ? `<img src="${escapeHtml(getWebpSrc(item.image))}" data-fallback="${escapeHtml(item.image)}" onerror="this.onerror=null;this.src=this.dataset.fallback;" alt="">`
+                ? `<img class="checkout-thumb-img" alt="">`
                 : `<div class="product-placeholder">Фото</div>`
             }
             </div>
@@ -404,12 +397,17 @@ function renderCheckoutItems() {
             <button type="button" class="checkout-item-remove" data-remove-one="${index}" aria-label="Видалити з кошика">×</button>
         `;
         checkoutItemsEl.appendChild(row);
+        const thumbCheckout = row.querySelector('img.checkout-thumb-img');
+        if (thumbCheckout && item.image) {
+            const prod = products.find((p) => String(p.id) === String(item.id));
+            attachImgFallbackChain(thumbCheckout, imageSrcCandidates(item.image, prod));
+        }
         if (checkoutItemsFormEl) {
             const rowForm = document.createElement('div');
             rowForm.className = 'checkout-item checkout-item-in-form';
             rowForm.innerHTML = `
                 <div class="checkout-item-thumb">
-                ${item.image ? `<img src="${escapeHtml(getWebpSrc(item.image))}" data-fallback="${escapeHtml(item.image)}" onerror="this.onerror=null;this.src=this.dataset.fallback;" alt="">` : `<div class="product-placeholder">Фото</div>`}
+                ${item.image ? `<img class="checkout-thumb-img" alt="">` : `<div class="product-placeholder">Фото</div>`}
                 </div>
                 <div class="checkout-item-info">
                     <div class="checkout-item-name">${escapeHtml(item.name)}</div>
@@ -419,6 +417,11 @@ function renderCheckoutItems() {
                 <button type="button" class="checkout-item-remove checkout-item-remove-in-form" data-remove-one="${index}" aria-label="Видалити з кошика">×</button>
             `;
             checkoutItemsFormEl.appendChild(rowForm);
+            const thumbForm = rowForm.querySelector('img.checkout-thumb-img');
+            if (thumbForm && item.image) {
+                const prodForm = products.find((p) => String(p.id) === String(item.id));
+                attachImgFallbackChain(thumbForm, imageSrcCandidates(item.image, prodForm));
+            }
         }
     });
     const totalText = total.toFixed(0) + ' грн';
@@ -695,6 +698,8 @@ const products = [
     name: "Бодістокінг AnnaBell",
     image: "assets/annbellblack1.webp",
     images: ["assets/annbellblack1.webp", "assets/annbellblack2.webp", "assets/annabellblack3.webp", "assets/rozmiri.png"],
+    /** Якщо .webp не віддається з CDN — показуємо JPG з репозиторію */
+    thumbnailFallback: "assets/BodyAnnaBelChorniy.jpg",
     color: "чорний",
     price: 330,
     sizes: ["XS","S","M","L","XL","2XL"],
@@ -711,6 +716,7 @@ const products = [
     name: "Бодістокінг AnnaBell",
     image: "assets/AnnaBellRed.webp",
     images: ["assets/AnnaBellRed.webp", "assets/AnnabellRed2.webp", "assets/AnnaBellred3.webp", "assets/rozmiri.png"],
+    thumbnailFallback: "assets/bodystocking-1.png",
     color: "червоний",
     price: 330,
     sizes: ["XS","S","M","L","XL","2XL"],
@@ -776,7 +782,7 @@ const products = [
     category: "БОДІСТОКІНГИ",
     name: "Бодістокінг Lily",
     image: "assets/BodyLilyBiliy.jpg",
-    images: ["assets/BodyLilyBiliy.jpg", "assets/BodyLiluBiliy2.jpg", "assets/BodyLilyBiliy3.jpg", "assets/rozmiri.png"],
+    images: ["assets/BodyLilyBiliy.jpg", "assets/BodyLiluBiliy2.jpg", "assets/BodyLilyBiliy.jpg", "assets/rozmiri.png"],
     color: "білий",
     price: 410,
     sizes: ["XS","S","M","L","XL","2XL"],
@@ -822,7 +828,7 @@ const products = [
     category: "КОМПЛЕКТИ",
     name: "Комплект Bella",
     image: "assets/BodyBella.jpg",
-    images: ["assets/BodyBella.jpg", "assets/BodyBella2.jpg", "assets/BodyBella3.jpg", "assets/rozmiri.png"],
+    images: ["assets/BodyBella.jpg", "assets/BodyBella2.jpg", "assets/Bodybella3.jpg", "assets/rozmiri.png"],
     price: 490,
     sizes: ["XS","S","M","L","XL"],
     description: `Красивий комплект для особливих подій.
@@ -907,17 +913,7 @@ const products = [
     Довжина халатика 75 см.`
     },
 
-    {
-    id: 15,
-    category: "БОДІ",
-    name: "Боді з доступом чорне",
-    image: "assets/BodyZDostupomChorne2.jpg",
-    images: ["assets/BodyZDostupomChorne2.jpg", "assets/rozmiri.png"],
-    color: "чорне",
-    price: 440,
-    sizes: ["80B", "80C", "80D", "80E", "85B", "85C", "85D", "85E", "90B", "90C", "90D", "90E"],
-    description: `Боді з відкритим вирізом знизу. Зручне для годування. М'який пуш-ап. Можна носити з костюмом або окремо.`
-    }
+  
     ];
 
     let currentProductId = null;
@@ -934,6 +930,43 @@ function escapeHtml(str = '') {
 function getWebpSrc(src = '') {
     // Если исходник .png/.jpg, пробуем подменить на .webp
     return String(src).replace(/\.(png|jpe?g)$/i, '.webp');
+}
+
+/** Абсолютний шлях від кореня сайту (Vercel / підкаталоги — без «зламаних» відносних URL) */
+function assetUrl(src) {
+    if (!src) return '';
+    const s = String(src).trim();
+    if (/^(https?:|data:|\/\/)/i.test(s)) return s;
+    if (s.startsWith('/')) return s;
+    return '/' + s.replace(/^\.\//, '');
+}
+
+/** Порядок спроб завантаження (webp → оригінал → запасний JPG/PNG у репо) */
+function imageSrcCandidates(src, product) {
+    const list = [];
+    const push = (u) => {
+        const n = assetUrl(u);
+        if (n && !list.includes(n)) list.push(n);
+    };
+    push(getWebpSrc(src));
+    push(src);
+    if (product && product.thumbnailFallback) push(product.thumbnailFallback);
+    return list;
+}
+
+function attachImgFallbackChain(img, candidates) {
+    const urls = candidates.filter(Boolean);
+    if (!urls.length) return;
+    let i = 0;
+    img.src = urls[0];
+    img.onerror = () => {
+        i += 1;
+        if (i < urls.length) {
+            img.src = urls[i];
+        } else {
+            img.onerror = null;
+        }
+    };
 }
 
 function renderProducts() {
@@ -960,7 +993,7 @@ function renderProducts() {
             ? 'width="400"'
             : 'width="400" height="400"';
         const imageMarkup = product.image
-            ? `<img src="${escapeHtml(getWebpSrc(product.image))}" data-fallback="${escapeHtml(product.image)}" onerror="this.onerror=null;this.src=this.dataset.fallback;" alt="${escapeHtml(fullName)}" class="product-main-img${imgFitClass}${imgHeightAutoClass}" loading="lazy" ${imgSizeAttrs}>`
+            ? `<img alt="${escapeHtml(fullName)}" class="product-main-img${imgFitClass}${imgHeightAutoClass}" loading="lazy" ${imgSizeAttrs}>`
             : `<div class="product-placeholder">Фото скоро</div>`;
 
         article.innerHTML = `
@@ -984,6 +1017,11 @@ function renderProducts() {
                 </div>
             </div>
         `;
+
+        const cardImg = article.querySelector('img.product-main-img');
+        if (cardImg && product.image) {
+            attachImgFallbackChain(cardImg, imageSrcCandidates(product.image, product));
+        }
 
         grid.appendChild(article);
     });
