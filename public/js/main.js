@@ -693,8 +693,8 @@ const products = [
     id: 1,
     category: "БОДІСТОКІНГИ",
     name: "Бодістокінг AnnaBell",
-    image: "assets/bodystocking-black-1.png",
-    images: ["assets/bodystocking-black-1.png", "assets/bodystocking-black-2.png", "assets/bodystocking-black-3.png", "assets/rozmiri.png"],
+    image: "assets/annbellblack1.webp",
+    images: ["assets/annbellblack1.webp", "assets/annbellblack2.webp", "assets/annabellblack3.webp", "assets/rozmiri.png"],
     color: "чорний",
     price: 330,
     sizes: ["XS","S","M","L","XL","2XL"],
@@ -709,11 +709,13 @@ const products = [
     id: 2,
     category: "БОДІСТОКІНГИ",
     name: "Бодістокінг AnnaBell",
-    image: "assets/bodystocking-1.png",
-    images: ["assets/bodystocking-1.png", "assets/bodystocking-2.png", "assets/bodystocking-3.png", "assets/rozmiri.png"],
+    image: "assets/AnnaBellRed.webp",
+    images: ["assets/AnnaBellRed.webp", "assets/AnnabellRed2.webp", "assets/AnnaBellred3.webp", "assets/rozmiri.png"],
     color: "червоний",
     price: 330,
     sizes: ["XS","S","M","L","XL","2XL"],
+    /** На картці каталогу — повне фото без обрізання (лише цей товар) */
+    thumbnailObjectFit: 'contain',
     description: `Розмір універсальний, дуже еластичний матеріал.
     Підійде на XS, S, M, L, XL, 2XL.
     Ідеальний варіант, якщо не знаєте свого розміру.
@@ -755,9 +757,11 @@ const products = [
     id: 5,
     category: "БОДІСТОКІНГИ",
     name: "Бодістокінг Lily",
-    image: "assets/BodyLilyChorniy.jpg",
-    images: ["assets/BodyLilyChorniy.jpg", "assets/BodyLilyChorniy2.jpg", "assets/BodyLilyChorniy3.png", "assets/rozmiri.png"],
+    image: "assets/lilunew.jpg",
+    images: ["assets/BodyLilyChorniy.jpg", "assets/BodyLilyChorniy2.jpg", "assets/Lilublack.png", "assets/rozmiri.png"],
     color: "чорний",
+    /** Лише ця картка: без фіксованої висоти в розмітці, у CSS height: auto */
+    thumbnailImgHeightAuto: true,
     price: 410,
     sizes: ["XS","S","M","L","XL","2XL"],
     description: `Матеріал нейлон, ніжний на дотик і дуже еластичний.
@@ -947,8 +951,16 @@ function renderProducts() {
             ? `${product.name} (${product.color})`
             : product.name;
 
+        const imgFitClass =
+            product.thumbnailObjectFit === 'contain' ? ' product-main-img--contain' : '';
+        const imgHeightAutoClass = product.thumbnailImgHeightAuto
+            ? ' product-main-img--height-auto'
+            : '';
+        const imgSizeAttrs = product.thumbnailImgHeightAuto
+            ? 'width="400"'
+            : 'width="400" height="400"';
         const imageMarkup = product.image
-            ? `<img src="${escapeHtml(getWebpSrc(product.image))}" data-fallback="${escapeHtml(product.image)}" onerror="this.onerror=null;this.src=this.dataset.fallback;" alt="${escapeHtml(fullName)}" class="product-main-img" loading="lazy" width="400" height="400">`
+            ? `<img src="${escapeHtml(getWebpSrc(product.image))}" data-fallback="${escapeHtml(product.image)}" onerror="this.onerror=null;this.src=this.dataset.fallback;" alt="${escapeHtml(fullName)}" class="product-main-img${imgFitClass}${imgHeightAutoClass}" loading="lazy" ${imgSizeAttrs}>`
             : `<div class="product-placeholder">Фото скоро</div>`;
 
         article.innerHTML = `

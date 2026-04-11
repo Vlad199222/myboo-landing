@@ -568,6 +568,26 @@ img {
     object-fit: cover;
 }
 
+.product-main-img--contain {
+    object-fit: contain;
+    object-position: center;
+}
+
+/* Одна картка: природні пропорції фото, без розтягування по висоті квадрата */
+.product-image:has(.product-main-img--height-auto) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-main-img--height-auto {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
 .product-add {
     width: 36px;
     height: 36px;
@@ -1200,11 +1220,14 @@ body.modal-open {
     background: var(--color-surface);
     border-radius: var(--radius-lg);
     max-width: 1100px;
-    width: 100%;
+    width: min(100%, 1100px);
+    max-height: calc(100vh - 2.5rem);
+    overflow-y: auto;
     margin: 1.5rem;
     padding: 2rem 2.25rem;
     position: relative;
     border: 1px solid rgba(255, 255, 255, 0.08);
+    box-sizing: border-box;
 }
 
 .modal-close {
@@ -1279,12 +1302,18 @@ body.modal-open {
         "image info"
         "thumbs info";
     gap: 1.5rem;
+    min-width: 0;
 }
 
 .modal-image-main img {
+    display: block;
     width: 100%;
+    max-width: 100%;
+    max-height: min(58vh, 520px);
+    height: auto;
     border-radius: var(--radius-lg);
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center;
 }
 
 .modal-thumbs {
@@ -1295,6 +1324,11 @@ body.modal-open {
 
 .modal-image-main {
     grid-area: image;
+    min-width: 0;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal-thumbs {
@@ -1343,6 +1377,7 @@ body.modal-open {
 
 .modal-info {
     grid-area: info;
+    min-width: 0;
 }
 
 .modal-options {
@@ -1407,19 +1442,12 @@ body.modal-open {
     background: rgba(232, 184, 109, 0.15);
 }
 
-/* Планшет і менше: фото товару в модалці в повний рост */
 @media (max-width: 1024px) {
     .modal-image-main {
-        min-height: 50vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        min-height: 0;
     }
     .modal-image-main img {
-        width: 100%;
-        max-height: 70vh;
-        object-fit: contain;
-        object-position: center;
+        max-height: min(52vh, 480px);
     }
 }
 
@@ -1438,10 +1466,10 @@ body.modal-open {
     }
     .modal-image-main {
         min-height: 0;
-        max-height: 58vh;
+        max-height: 48vh;
     }
     .modal-image-main img {
-        max-height: 55vh;
+        max-height: min(45vh, 420px);
         width: auto;
         max-width: 100%;
         margin: 0 auto;
