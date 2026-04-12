@@ -696,7 +696,7 @@ const products = [
     id: 1,
     category: "БОДІСТОКІНГИ",
     name: "Бодістокінг AnnaBell",
-    image: "assets/BodyAnnaBelChorniy.jpg",
+    image: "assets/annbellblack1.webp",
     images: ["assets/annbellblack1.webp", "assets/annbellblack2.webp", "assets/annabellblack3.webp", "assets/rozmiri.png"],
     /** Якщо .webp не віддається з CDN — показуємо JPG з репозиторію */
     thumbnailFallback: "assets/BodyAnnaBelChorniy.jpg",
@@ -714,7 +714,7 @@ const products = [
     id: 2,
     category: "БОДІСТОКІНГИ",
     name: "Бодістокінг AnnaBell",
-    image: "assets/bodystocking-1.png",
+    image: "assets/AnnaBellred3.jpg",
     images: ["assets/AnnaBellRed.webp", "assets/AnnabellRed2.webp", "assets/AnnaBellred3.webp", "assets/rozmiri.png"],
     thumbnailFallback: "assets/bodystocking-1.png",
     color: "червоний",
