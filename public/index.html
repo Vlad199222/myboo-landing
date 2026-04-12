@@ -9,37 +9,17 @@
         content="Жіноча білизна MyBoo: бодістокінги, халати та комплекти. Оформіть замовлення з доставкою Новою Поштою.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="/css/styles.css?v=4" as="style">
-    <!-- Шрифти завантажуються асинхронно, щоб не блокувати LCP -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+    <link rel="dns-prefetch" href="https://connect.facebook.net">
+    <link rel="preload" href="/assets/hero-figure.webp" as="image" type="image/webp">
+    <link rel="stylesheet" href="/css/styles.min.css?v=5">
+    <!-- Шрифти: менше накреслень + асинхронно (LCP) -->
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap"
         as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+            href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap">
     </noscript>
-    <link rel="stylesheet" href="/css/styles.css?v=4">
-    <!-- Meta Pixel Code -->
-    <script>
-        // Чтобы не тормозить первичную отрисовку, Meta Pixel инициализируем после полной загрузки страницы
-        window.addEventListener('load', function () {
-            !function (f, b, e, v, n, t, s) {
-                if (f.fbq) return; n = f.fbq = function () {
-                    n.callMethod ?
-                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-                };
-                if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-                n.queue = []; t = b.createElement(e); t.async = !0;
-                t.src = v; s = b.getElementsByTagName(e)[0];
-                s.parentNode.insertBefore(t, s)
-            }(window, document, 'script',
-                'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '1395086841670569');
-            fbq('track', 'PageView');
-        });
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-            src="https://www.facebook.com/tr?id=1395086841670569&ev=PageView&noscript=1" /></noscript>
-    <!-- End Meta Pixel Code -->
 </head>
 
 <body>
@@ -92,8 +72,11 @@
     <main>
         <section id="hero" class="hero hero-promo">
             <div class="hero-figure" aria-hidden="true">
-                <img src="/assets/hero-figure.png" alt="" class="hero-figure-img" width="280" height="280"
-                    fetchpriority="high">
+                <picture>
+                    <source srcset="/assets/hero-figure.webp" type="image/webp">
+                    <img src="/assets/hero-figure.png" alt="" class="hero-figure-img" width="280" height="280"
+                        fetchpriority="high" decoding="async">
+                </picture>
             </div>
             <div class="hero-content hero-promo-content">
                 <h1 class="hero-promo-title hero-promo-title--long">Жіноча білизна зі знижкою сьогодні 🔥</h1>
@@ -533,7 +516,26 @@
         </div>
     </footer>
 
-    <script src="/js/main.js?v=4" defer></script>
+    <script src="/js/main.min.js?v=5" defer></script>
+    <script>
+        window.addEventListener('load', function () {
+            !function (f, b, e, v, n, t, s) {
+                if (f.fbq) return; n = f.fbq = function () {
+                    n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                };
+                if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+                n.queue = []; t = b.createElement(e); t.async = !0;
+                t.src = v; s = b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t, s)
+            }(window, document, 'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '1395086841670569');
+            fbq('track', 'PageView');
+        });
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=1395086841670569&ev=PageView&noscript=1" alt="" /></noscript>
 </body>
 
 </html>

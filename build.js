@@ -19,7 +19,7 @@ async function build() {
   const jsOutPath = path.join(__dirname, 'js', 'main.min.js');
   const jsCode = fs.readFileSync(jsPath, 'utf8');
   const jsResult = await terser.minify(jsCode, {
-    compress: { drop_console: false },
+    compress: { drop_console: false, passes: 2 },
     mangle: false,
     format: { comments: false }
   });
@@ -39,8 +39,12 @@ async function build() {
     console.warn('purgecss не встановлено — пропускаємо purge. npm install --save-dev purgecss');
   }
   if (PurgeCSS) {
+    const htmlPaths = fs
+      .readdirSync(__dirname)
+      .filter((f) => f.endsWith('.html'))
+      .map((f) => path.join(__dirname, f));
     const content = [
-      path.join(__dirname, 'index.html'),
+      ...htmlPaths,
       path.join(__dirname, 'js', 'main.js')
     ].filter((f) => fs.existsSync(f));
     const purgeResult = await new PurgeCSS().purge({
@@ -123,8 +127,12 @@ async function build() {
 
     if (fs.existsSync(assetsDir)) {
       await walk(assetsDir);
-      console.log('webp generated');
     }
+    const rootAssetsDir = path.join(__dirname, 'assets');
+    if (fs.existsSync(rootAssetsDir)) {
+      await walk(rootAssetsDir);
+    }
+    console.log('webp generated');
   } catch (e) {
     console.warn('sharp не встановлено або webp генерація пропущена:', e && e.message ? e.message : e);
   }

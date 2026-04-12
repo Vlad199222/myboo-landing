@@ -23,8 +23,13 @@
 }
 
 html {
-    scroll-behavior: smooth;
     overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
 }
 
 body {
@@ -348,6 +353,10 @@ img {
     animation: figure-float 4s ease-in-out infinite;
 }
 
+.hero-figure picture {
+    display: contents;
+}
+
 .hero-figure-img {
     width: 100%;
     height: auto;
@@ -476,7 +485,7 @@ img {
     align-items: center;
     justify-content: center;
     font-size: 3rem;
-    font-weight: 300;
+    font-weight: 400;
     color: rgba(255, 255, 255, 0.1);
 }
 
