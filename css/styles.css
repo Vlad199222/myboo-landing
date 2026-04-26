@@ -195,8 +195,8 @@ img {
     font-weight: 700;
     line-height: 1;
     margin-bottom: 1rem;
-    color: var(--color-accent);
-    text-shadow: 0 0 40px rgba(232, 184, 109, 0.4);
+    color: #ffd84d;
+    text-shadow: 0 0 40px rgba(255, 216, 77, 0.45), 0 0 16px rgba(255, 216, 77, 0.25);
 }
 
 .hero-promo-text {
@@ -206,6 +206,18 @@ img {
     max-width: 520px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.hero-promo-title--hot {
+    color: #ffe24a;
+    text-shadow: 0 0 44px rgba(255, 226, 74, 0.55), 0 0 18px rgba(255, 226, 74, 0.3);
+}
+
+.hero-promo-text--hot {
+    color: rgba(255, 226, 74, 0.85);
+    font-size: clamp(1.05rem, 2.5vw, 1.45rem);
+    font-weight: 600;
+    margin-bottom: 1.9rem;
 }
 
 /* Довший заголовок у hero (не як коротке «1+1=3») */

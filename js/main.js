@@ -913,6 +913,36 @@ const products = [
     Довжина халатика 75 см.`
     },
 
+    {
+    id: 15,
+    category: "КОМПЛЕКТИ",
+    name: "Топ + трусики",
+    image: "assets/topblack.jpg",
+    images: ["assets/topblack.jpg", "assets/topblack2.jpg", "assets/rozmiri.png"],
+    color: "чорний",
+    price: 350,
+    sizes: ["XS","S","M","L","XL"],
+    description: `Комплект топ + трусики.
+    М'який еластичний матеріал.
+    Підійде для щоденного комфорту та особливого настрою.
+    У комплекті: топ і трусики.`
+    },
+
+    {
+    id: 16,
+    category: "КОМПЛЕКТИ",
+    name: "Топ + трусики",
+    image: "assets/topred.jpg",
+    images: ["assets/topred.jpg", "assets/topred2.jpg", "assets/rozmiri.png"],
+    color: "червоний",
+    price: 350,
+    sizes: ["XS","S","M","L","XL"],
+    description: `Комплект топ + трусики.
+    М'який еластичний матеріал.
+    Підійде для щоденного комфорту та особливого настрою.
+    У комплекті: топ і трусики.`
+    },
+
   
     ];
 
