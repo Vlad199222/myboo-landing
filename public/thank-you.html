@@ -96,13 +96,13 @@
         }(window, document, 'script',
             'https://connect.facebook.net/en_US/fbevents.js');
 
-        fbq('init', '1395086841670569');
+        fbq('init', '1062253283274291');
         fbq('track', 'PageView');
     </script>
 
     <noscript>
         <img height="1" width="1" style="display:none"
-             src="https://www.facebook.com/tr?id=1395086841670569&ev=PageView&noscript=1" />
+             src="https://www.facebook.com/tr?id=1062253283274291&ev=PageView&noscript=1" />
     </noscript>
 </head>
 
@@ -131,18 +131,24 @@
     <script>
         const params = new URLSearchParams(window.location.search);
         const orderId = params.get('orderId');
+        const rawTotal = Number(params.get('total') || 0);
+        const orderTotal = Number.isFinite(rawTotal) && rawTotal > 0 ? rawTotal : 0;
+
         if (orderId) {
             document.getElementById('order-id').innerText = 'Номер замовлення: №' + orderId;
         }
     </script>
 
-    <!-- Lead Event -->
+    <!-- Meta events -->
     <script>
         window.onload = function () {
             setTimeout(function () {
                 if (typeof fbq === 'function') {
-                    fbq('track', 'Lead');
-                    console.log('LEAD SENT');
+                    fbq('track', 'Lead', { value: 0.00, currency: 'UAH' });
+                    if (orderTotal > 0) {
+                        fbq('track', 'Purchase', { value: orderTotal, currency: 'UAH' });
+                    }
+                    console.log('META EVENTS SENT', { orderTotal });
                 } else {
                     console.log('FBQ NOT FOUND');
                 }

@@ -617,7 +617,11 @@ document.querySelector('[data-order-form]')?.addEventListener('submit', async (e
             renderOrderSummary();
             form.reset();
             const orderId = data.orderId || '';
-            window.location.href = 'thank-you.html' + (orderId ? '?orderId=' + encodeURIComponent(orderId) : '');
+            const total = Number(data.total) || 0;
+            const params = new URLSearchParams();
+            if (orderId) params.set('orderId', orderId);
+            if (total > 0) params.set('total', String(total));
+            window.location.href = 'thank-you.html' + (params.toString() ? '?' + params.toString() : '');
             return;
         } else {
             if (msgEl) { msgEl.textContent = data.error || 'Помилка відправки.'; msgEl.dataset.state = 'error'; }
@@ -670,7 +674,11 @@ document.querySelector('[data-checkout-form]')?.addEventListener('submit', async
             form.reset();
             closeCheckoutModal();
             const orderId = data.orderId || '';
-            window.location.href = 'thank-you.html' + (orderId ? '?orderId=' + encodeURIComponent(orderId) : '');
+            const total = Number(data.total) || 0;
+            const params = new URLSearchParams();
+            if (orderId) params.set('orderId', orderId);
+            if (total > 0) params.set('total', String(total));
+            window.location.href = 'thank-you.html' + (params.toString() ? '?' + params.toString() : '');
             return;
         } else {
             checkoutMessageEl.textContent = data.error || 'Помилка відправки.';
