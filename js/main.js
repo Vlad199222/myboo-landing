@@ -160,8 +160,8 @@ function showToast(message) {
         bottom: 2rem;
         left: 50%;
         transform: translateX(-50%) translateY(100px);
-        background: #e8b86d;
-        color: #0f0f0f;
+        background: #ea8aa6;
+        color: #fff;
         padding: 0.75rem 1.5rem;
         border-radius: 8px;
         font-weight: 500;
@@ -273,7 +273,16 @@ const checkoutItemsEl = document.querySelector('[data-checkout-items]');
 const checkoutTotalEl = document.querySelector('[data-checkout-total]');
 const checkoutTotalBottomEl = document.querySelector('[data-checkout-total-bottom]');
 const checkoutItemsFormEl = document.querySelector('[data-checkout-items-form]');
+const checkoutSummaryInFormTitleEl = document.querySelector('.checkout-summary-in-form-title');
 const checkoutTotalFormEl = document.querySelector('[data-checkout-total-form]');
+
+function pluralizeUk(n, [one, few, many]) {
+    const mod10 = n % 10;
+    const mod100 = n % 100;
+    if (mod10 === 1 && mod100 !== 11) return one;
+    if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return few;
+    return many;
+}
 const checkoutMessageEl = document.querySelector('[data-checkout-message]');
 
 function openProductModal(productId) {
@@ -406,28 +415,24 @@ function renderCheckoutItems() {
             const rowForm = document.createElement('div');
             rowForm.className = 'checkout-item checkout-item-in-form';
             rowForm.innerHTML = `
-                <div class="checkout-item-thumb">
-                ${item.image ? `<img class="checkout-thumb-img" alt="">` : `<div class="product-placeholder">Фото</div>`}
-                </div>
                 <div class="checkout-item-info">
                     <div class="checkout-item-name">${escapeHtml(item.name)}</div>
-                    <div class="checkout-item-meta">× ${item.quantity}</div>
                 </div>
                 <div class="checkout-item-price">${lineTotal.toFixed(0)} грн</div>
                 <button type="button" class="checkout-item-remove checkout-item-remove-in-form" data-remove-one="${index}" aria-label="Видалити з кошика">×</button>
             `;
             checkoutItemsFormEl.appendChild(rowForm);
-            const thumbForm = rowForm.querySelector('img.checkout-thumb-img');
-            if (thumbForm && item.image) {
-                const prodForm = products.find((p) => String(p.id) === String(item.id));
-                attachImgFallbackChain(thumbForm, imageSrcCandidates(item.image, prodForm));
-            }
         }
     });
     const totalText = total.toFixed(0) + ' грн';
     checkoutTotalEl.textContent = totalText;
     checkoutTotalBottomEl.textContent = totalText;
     if (checkoutTotalFormEl) checkoutTotalFormEl.textContent = totalText;
+    if (checkoutSummaryInFormTitleEl) {
+        const itemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const word = pluralizeUk(itemsCount, ['товар', 'товари', 'товарів']);
+        checkoutSummaryInFormTitleEl.textContent = `У кошику: ${itemsCount} ${word}`;
+    }
 }
 
 function openCheckoutModal(showForm) {
