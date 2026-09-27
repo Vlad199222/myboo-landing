@@ -17,7 +17,7 @@
       as="image"
       type="image/webp"
     />
-    <link rel="stylesheet" href="/css/styles.css?v=6" />
+    <link rel="stylesheet" href="/css/styles.css?v=8" />
     <!-- Шрифти: менше накреслень + асинхронно (LCP) -->
     <link
       rel="preload"
@@ -623,23 +623,10 @@
           <div class="checkout-header">
             <h2 id="checkout-form-title">Оформлення замовлення</h2>
             <p class="checkout-subtitle">
-              Оплата при отриманні · Якість гарантована
+              Оплата на пошті
             </p>
           </div>
           <div class="checkout-form-body">
-            <div class="checkout-summary-in-form">
-              <p class="checkout-summary-in-form-title">У кошику:</p>
-              <div
-                class="checkout-items checkout-items-in-form"
-                data-checkout-items-form
-              ></div>
-              <div class="checkout-total-row checkout-total-row-in-form">
-                <span>Разом:</span>
-                <span class="checkout-total" data-checkout-total-form
-                  >0 грн</span
-                >
-              </div>
-            </div>
             <form class="checkout-form" data-checkout-form>
               <label class="checkout-label">
                 Ім’я (обов'язково):
@@ -672,6 +659,10 @@
                   <span>Доставка без дзвінка</span>
                 </label>
               </fieldset>
+              <div
+                class="checkout-items checkout-items-in-form"
+                data-checkout-items-form
+              ></div>
               <div class="checkout-total-row checkout-total-row-bottom">
                 <span>Загальна сума:</span>
                 <span class="checkout-total" data-checkout-total-bottom
@@ -764,7 +755,7 @@
       </div>
     </footer>
 
-    <script src="/js/main.js?v=6" defer></script>
+    <script src="/js/main.js?v=8" defer></script>
     <script>
       window.addEventListener("load", function () {
         !(function (f, b, e, v, n, t, s) {

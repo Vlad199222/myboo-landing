@@ -143,8 +143,13 @@ function renderOrderSummary() {
         const row = document.createElement('div');
         row.className = 'order-item-row';
         row.innerHTML = `
-            <span>${escapeHtml(item.name)} × ${item.quantity}</span>
-            <span>${(item.price * item.quantity).toFixed(0)} грн</span>
+            <span>${escapeHtml(item.name)}</span>
+            <span class="qty-stepper">
+                <button type="button" class="qty-stepper-btn" data-qty-change="-1" data-qty-index="${index}" aria-label="Зменшити кількість">−</button>
+                <span class="qty-stepper-value">${item.quantity}</span>
+                <button type="button" class="qty-stepper-btn" data-qty-change="1" data-qty-index="${index}" aria-label="Збільшити кількість">+</button>
+            </span>
+            <span class="order-item-price">${(item.price * item.quantity).toFixed(0)} грн</span>
             <button type="button" class="order-item-remove" data-remove-one="${index}" aria-label="Видалити з кошика">×</button>
         `;
         container.appendChild(row);
@@ -273,16 +278,6 @@ const checkoutItemsEl = document.querySelector('[data-checkout-items]');
 const checkoutTotalEl = document.querySelector('[data-checkout-total]');
 const checkoutTotalBottomEl = document.querySelector('[data-checkout-total-bottom]');
 const checkoutItemsFormEl = document.querySelector('[data-checkout-items-form]');
-const checkoutSummaryInFormTitleEl = document.querySelector('.checkout-summary-in-form-title');
-const checkoutTotalFormEl = document.querySelector('[data-checkout-total-form]');
-
-function pluralizeUk(n, [one, few, many]) {
-    const mod10 = n % 10;
-    const mod100 = n % 100;
-    if (mod10 === 1 && mod100 !== 11) return one;
-    if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return few;
-    return many;
-}
 const checkoutMessageEl = document.querySelector('[data-checkout-message]');
 
 function openProductModal(productId) {
@@ -383,6 +378,37 @@ document.querySelector('[data-modal-backdrop]')?.addEventListener('click', (e) =
     btn.classList.add('is-active');
 });
 
+// Свайп пальцем по головному фото в модалці товару (мобільні) — перемикає мініатюри
+(function setupModalImageSwipe() {
+    const imageWrap = document.querySelector('[data-modal-backdrop] .modal-image-main');
+    if (!imageWrap) return;
+    let startX = 0;
+    let startY = 0;
+
+    imageWrap.addEventListener('touchstart', (e) => {
+        const touch = e.touches[0];
+        if (!touch) return;
+        startX = touch.clientX;
+        startY = touch.clientY;
+    }, { passive: true });
+
+    imageWrap.addEventListener('touchend', (e) => {
+        const touch = e.changedTouches[0];
+        if (!touch) return;
+        const dx = touch.clientX - startX;
+        const dy = touch.clientY - startY;
+        if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+
+        const thumbsWrap = document.querySelector('[data-modal-backdrop] .modal-thumbs');
+        const thumbs = thumbsWrap ? Array.from(thumbsWrap.querySelectorAll('.modal-thumb')) : [];
+        if (!thumbs.length) return;
+        const activeIndex = thumbs.findIndex((t) => t.classList.contains('is-active'));
+        const delta = dx < 0 ? 1 : -1;
+        const nextIndex = ((activeIndex === -1 ? 0 : activeIndex) + delta + thumbs.length) % thumbs.length;
+        thumbs[nextIndex].click();
+    }, { passive: true });
+})();
+
 function renderCheckoutItems() {
     if (!checkoutItemsEl || !checkoutTotalEl || !checkoutTotalBottomEl) return;
     checkoutItemsEl.innerHTML = '';
@@ -402,7 +428,11 @@ function renderCheckoutItems() {
             </div>
             <div class="checkout-item-info">
                 <div class="checkout-item-name">${escapeHtml(item.name)}</div>
-                <div class="checkout-item-meta">Кількість: ${item.quantity}</div>
+                <span class="qty-stepper">
+                    <button type="button" class="qty-stepper-btn" data-qty-change="-1" data-qty-index="${index}" aria-label="Зменшити кількість">−</button>
+                    <span class="qty-stepper-value">${item.quantity}</span>
+                    <button type="button" class="qty-stepper-btn" data-qty-change="1" data-qty-index="${index}" aria-label="Збільшити кількість">+</button>
+                </span>
             </div>
             <div class="checkout-item-price">${lineTotal.toFixed(0)} грн</div>
             <button type="button" class="checkout-item-remove" data-remove-one="${index}" aria-label="Видалити з кошика">×</button>
@@ -429,12 +459,6 @@ function renderCheckoutItems() {
     const totalText = total.toFixed(0) + ' грн';
     checkoutTotalEl.textContent = totalText;
     checkoutTotalBottomEl.textContent = totalText;
-    if (checkoutTotalFormEl) checkoutTotalFormEl.textContent = totalText;
-    if (checkoutSummaryInFormTitleEl) {
-        const itemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-        const word = pluralizeUk(itemsCount, ['товар', 'товари', 'товарів']);
-        checkoutSummaryInFormTitleEl.textContent = `У кошику: ${itemsCount} ${word}`;
-    }
 }
 
 function openCheckoutModal(showForm) {
@@ -517,6 +541,22 @@ document.addEventListener('click', (e) => {
     } else {
         showToast('Товар видалено з кошика.');
     }
+});
+
+// Зміна кількості товару в кошику (кнопки - / + в блоці «Ваш кошик»)
+document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-qty-change]');
+    if (!btn) return;
+    const index = parseInt(btn.getAttribute('data-qty-index'), 10);
+    const delta = parseInt(btn.getAttribute('data-qty-change'), 10);
+    if (isNaN(index) || index < 0 || index >= cart.length || isNaN(delta)) return;
+    const nextQty = cart[index].quantity + delta;
+    if (nextQty < 1) return;
+    cart[index].quantity = nextQty;
+    saveCartToStorage();
+    updateCartCount();
+    renderOrderSummary();
+    renderCheckoutItems();
 });
 
 // Видалити все з кошика

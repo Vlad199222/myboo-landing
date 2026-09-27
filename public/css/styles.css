@@ -795,9 +795,46 @@ img {
     color: var(--color-text-muted);
 }
 
-.order-item-row span:nth-child(2) {
+.order-item-price {
     color: var(--color-accent);
     font-weight: 500;
+}
+
+.qty-stepper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+}
+
+.qty-stepper-btn {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    border: 1px solid rgba(74, 44, 57, 0.18);
+    border-radius: 50%;
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.qty-stepper-btn:hover {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-on-accent);
+}
+
+.qty-stepper-value {
+    min-width: 1.2em;
+    text-align: center;
+    font-weight: 600;
+    color: var(--color-text);
 }
 
 /* Крестик видалення товару в блоці «Ваш кошик» на сторінці */
@@ -1523,10 +1560,11 @@ body.modal-open {
     }
     .modal-image-main {
         min-height: 0;
-        max-height: 40vh;
+        max-height: 44vh;
+        touch-action: pan-y;
     }
     .modal-image-main img {
-        max-height: min(38vh, 360px);
+        max-height: min(42vh, 400px);
         width: auto;
         max-width: 100%;
         margin: 0 auto;
@@ -1566,14 +1604,14 @@ body.modal-open {
 }
 
 .checkout-header h2 {
-    font-size: 1rem;
+    font-size: 0.85rem;
     text-transform: uppercase;
     margin-bottom: 0.25rem;
 }
 
 .checkout-subtitle {
     color: var(--color-text-muted);
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     margin-bottom: 1.25rem;
 }
 
@@ -1630,27 +1668,14 @@ body.modal-open {
     min-height: 0;
 }
 
-.checkout-summary-in-form {
-    background: var(--color-bg);
-    border-radius: var(--radius);
-    padding: 0.6rem 0.75rem;
-    flex-shrink: 0;
-}
-
-.checkout-summary-in-form-title {
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-text-muted);
-    margin: 0 0 0.4rem 0;
-}
-
 .checkout-items-in-form {
     gap: 0.4rem;
-    margin-bottom: 0.4rem;
+    margin-top: 0.25rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(74, 44, 57, 0.12);
     max-height: 120px;
     overflow-y: auto;
+    flex-shrink: 0;
 }
 
 .checkout-item.checkout-item-in-form {
@@ -1702,20 +1727,9 @@ body.modal-open {
     white-space: nowrap;
 }
 
-.checkout-total-row-in-form {
-    padding-top: 0.35rem;
-    border-top: 1px solid rgba(74, 44, 57, 0.12);
-    font-size: 0.9rem;
-}
-
 .checkout-form-view .checkout-form {
     flex: 1 1 auto;
     min-height: 0;
-}
-
-/* Коли зайшли з кошика по кнопці «Оформити замовлення» — тільки форма, без блоку «У кошику» */
-.checkout-form-view--no-cart .checkout-summary-in-form {
-    display: none;
 }
 
 @media (max-width: 768px) {
@@ -1732,7 +1746,7 @@ body.modal-open {
         padding: 0.85rem 0.9rem;
     }
     .checkout-form-view .checkout-header h2 {
-        font-size: 0.95rem;
+        font-size: 0.8rem;
     }
     .checkout-items-in-form {
         max-height: 100px;
@@ -1823,10 +1837,6 @@ body.modal-open {
 
 .checkout-item-name {
     font-weight: 600;
-}
-
-.checkout-item-meta {
-    color: var(--color-text-muted);
 }
 
 .checkout-item-price {
