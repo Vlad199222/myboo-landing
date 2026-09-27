@@ -2003,6 +2003,7 @@ body.modal-open {
     border: none;
     background: var(--color-hot);
     color: #fff;
+    font-size: 1.15rem;
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
