@@ -17,7 +17,7 @@
       as="image"
       type="image/webp"
     />
-    <link rel="stylesheet" href="/css/styles.css?v=16" />
+    <link rel="stylesheet" href="/css/styles.css?v=17" />
     <!-- Шрифти: менше накреслень + асинхронно (LCP) -->
     <link
       rel="preload"
@@ -620,6 +620,10 @@
           </div>
         </div>
         <div class="checkout-form-view" data-checkout-form-view hidden>
+          <div
+            class="checkout-items checkout-items-in-form"
+            data-checkout-items-form
+          ></div>
           <div class="checkout-header">
             <h2 id="checkout-form-title">Оформлення замовлення</h2>
             <p class="checkout-subtitle">
@@ -659,10 +663,6 @@
                   <span>Доставка без дзвінка</span>
                 </label>
               </fieldset>
-              <div
-                class="checkout-items checkout-items-in-form"
-                data-checkout-items-form
-              ></div>
               <div class="checkout-total-row checkout-total-row-bottom">
                 <span>Загальна сума:</span>
                 <span class="checkout-total" data-checkout-total-bottom
@@ -755,7 +755,7 @@
       </div>
     </footer>
 
-    <script src="/js/main.js?v=16" defer></script>
+    <script src="/js/main.js?v=17" defer></script>
     <script>
       window.addEventListener("load", function () {
         !(function (f, b, e, v, n, t, s) {
