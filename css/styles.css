@@ -1566,7 +1566,7 @@ body.modal-open {
 }
 
 .checkout-header h2 {
-    font-size: 1.15rem;
+    font-size: 1rem;
     text-transform: uppercase;
     margin-bottom: 0.25rem;
 }
@@ -1729,7 +1729,10 @@ body.modal-open {
         font-size: 0.8rem;
     }
     .checkout-form-view .checkout-label input {
-        padding: 0.45rem 0.6rem;
+        padding: 0.85rem 0.9rem;
+    }
+    .checkout-form-view .checkout-header h2 {
+        font-size: 0.95rem;
     }
     .checkout-items-in-form {
         max-height: 100px;
@@ -1865,8 +1868,8 @@ body.modal-open {
 }
 
 .checkout-label input {
-    padding: 0.55rem 0.75rem;
-    border-radius: 4px;
+    padding: 0.8rem 0.9rem;
+    border-radius: 8px;
     border: 1px solid rgba(74, 44, 57, 0.18);
     background: var(--color-bg);
     color: var(--color-text);
