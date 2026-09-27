@@ -1255,6 +1255,12 @@ img {
         flex-direction: column;
         text-align: center;
     }
+
+    .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem 1.25rem;
+    }
 }
 
 /* === Modal === */
@@ -1280,7 +1286,8 @@ body.modal-open {
     -webkit-overflow-scrolling: touch;
 }
 @media (max-width: 768px) {
-    .modal-backdrop[data-modal-backdrop] {
+    .modal-backdrop[data-modal-backdrop],
+    .checkout-backdrop {
         align-items: flex-start;
         padding: 3.25rem 0.75rem 1.5rem;
     }
@@ -1596,6 +1603,16 @@ body.modal-open {
 .checkout-modal {
     max-width: 900px;
     padding-top: 3.25rem;
+    max-height: none;
+    overflow-y: visible;
+}
+
+.checkout-cart-view {
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .checkout-cart-view .checkout-header,
@@ -1673,8 +1690,6 @@ body.modal-open {
     margin-top: 0.25rem;
     padding-top: 0.6rem;
     border-top: 1px solid rgba(74, 44, 57, 0.12);
-    max-height: 120px;
-    overflow-y: auto;
     flex-shrink: 0;
 }
 
@@ -1733,6 +1748,7 @@ body.modal-open {
 }
 
 @media (max-width: 768px) {
+    .checkout-cart-view,
     .checkout-form-view {
         max-height: 85vh;
     }
@@ -1747,9 +1763,6 @@ body.modal-open {
     }
     .checkout-form-view .checkout-header h2 {
         font-size: 0.8rem;
-    }
-    .checkout-items-in-form {
-        max-height: 100px;
     }
 }
 
