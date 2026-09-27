@@ -1611,6 +1611,10 @@ body.modal-open {
     overflow-y: visible;
 }
 
+.checkout-cart-view[hidden] {
+    display: none !important;
+}
+
 .checkout-cart-view {
     display: flex;
     flex-direction: column;
