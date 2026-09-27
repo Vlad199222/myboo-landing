@@ -415,7 +415,7 @@ img {
 @media (max-width: 768px) {
     .hero {
         min-height: auto;
-        padding: 6rem 1.5rem 3rem;
+        padding: 8.5rem 1.5rem 3rem;
     }
     .hero-figure {
         display: none;
@@ -1471,7 +1471,7 @@ body.modal-open {
 .modal-desc {
     color: var(--color-text-muted);
     margin-bottom: 1rem;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
 }
 
 .modal-info {
@@ -1760,7 +1760,7 @@ body.modal-open {
 }
 
 .checkout-item-in-form .checkout-item-info {
-    font-size: 0.7rem;
+    font-size: 0.95rem;
     min-width: 0;
 }
 
@@ -1771,7 +1771,7 @@ body.modal-open {
 }
 
 .checkout-item-in-form .checkout-item-price {
-    font-size: 0.7rem;
+    font-size: 1rem;
     font-weight: 600;
     white-space: nowrap;
 }
@@ -1984,8 +1984,8 @@ body.modal-open {
 .checkout-submit {
     margin-top: 1rem;
     width: 100%;
-    padding: 0.85rem 1.2rem;
-    border-radius: 999px;
+    padding: 1.25rem 1.2rem;
+    border-radius: 0;
     border: none;
     background: var(--color-hot);
     color: #fff;
