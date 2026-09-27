@@ -1613,7 +1613,7 @@ body.modal-open {
 
 @media (max-width: 768px) {
     .modal-backdrop.checkout-backdrop {
-        align-items: stretch;
+        align-items: flex-start;
         padding: 0;
     }
     .checkout-modal {
@@ -1621,6 +1621,10 @@ body.modal-open {
         max-width: 100%;
         min-height: 100vh;
         min-height: 100dvh;
+        max-height: 100vh;
+        max-height: 100dvh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         margin: 0;
         border-radius: 0;
         border: none;
