@@ -1278,6 +1278,18 @@ body.modal-open {
     width: 100%;
 }
 
+/* На мобільних position:fixed + фокус на radio/checkbox іноді "ламає" подальший
+   скрол всередині модалки (iOS/Android) — там вистачає простого overflow:hidden */
+@media (max-width: 768px) {
+    body.modal-open {
+        position: static;
+        top: auto;
+        left: auto;
+        right: auto;
+        width: auto;
+    }
+}
+
 .modal-backdrop {
     position: fixed;
     inset: 0;
