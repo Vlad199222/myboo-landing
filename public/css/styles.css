@@ -1860,23 +1860,6 @@ body.modal-open {
     font-weight: 600;
 }
 
-@media (max-width: 600px) {
-    .checkout-item-thumb img,
-    .checkout-item-thumb .product-placeholder {
-        width: 68px;
-        height: 68px;
-    }
-
-    .checkout-item-name {
-        font-size: 0.75rem;
-        font-weight: 500;
-    }
-
-    .checkout-item-price {
-        font-size: 1rem;
-    }
-}
-
 .checkout-total-row {
     display: flex;
     justify-content: space-between;
