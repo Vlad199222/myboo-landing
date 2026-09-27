@@ -353,6 +353,8 @@ function openProductModal(productId) {
     if (modalDescEls[3]) modalDescEls[3].innerHTML = `<strong>Опис:</strong> ${escapeHtml(product.description || '').replace(/\n/g, '<br>')}`;
 
     modalBackdrop.hidden = false;
+    modalBackdrop.scrollTop = 0;
+    modalBackdrop.querySelector('.modal')?.scrollTo(0, 0);
     lockBodyScroll();
 }
 
