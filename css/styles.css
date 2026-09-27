@@ -1871,6 +1871,7 @@ body.modal-open {
     background: var(--color-bg);
     color: var(--color-text);
     font-family: inherit;
+    font-size: 16px;
 }
 
 .checkout-label input:focus {
