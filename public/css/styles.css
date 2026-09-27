@@ -1668,13 +1668,15 @@ body.modal-open {
 
 .checkout-header h2 {
     font-size: 0.85rem;
+    font-weight: 800;
     text-transform: uppercase;
     margin-bottom: 0.25rem;
 }
 
 .checkout-subtitle {
-    color: var(--color-text-muted);
-    font-size: 0.7rem;
+    color: var(--color-text);
+    font-weight: 600;
+    font-size: 0.75rem;
     margin-bottom: 1.25rem;
 }
 
