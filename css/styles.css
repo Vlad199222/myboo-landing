@@ -413,6 +413,10 @@ img {
 }
 
 @media (max-width: 768px) {
+    .hero {
+        min-height: auto;
+        padding: 6rem 1.5rem 3rem;
+    }
     .hero-figure {
         display: none;
     }
@@ -1854,6 +1858,23 @@ body.modal-open {
 
 .checkout-item-price {
     font-weight: 600;
+}
+
+@media (max-width: 600px) {
+    .checkout-item-thumb img,
+    .checkout-item-thumb .product-placeholder {
+        width: 68px;
+        height: 68px;
+    }
+
+    .checkout-item-name {
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    .checkout-item-price {
+        font-size: 1rem;
+    }
 }
 
 .checkout-total-row {
