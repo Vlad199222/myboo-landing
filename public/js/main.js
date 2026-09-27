@@ -304,6 +304,9 @@ function openProductModal(productId) {
     if (modalPriceOld) modalPriceOld.textContent = `${Math.round(product.price * 1.25)} грн`;
     if (modalPrice) modalPrice.textContent = `${product.price} грн`;
 
+    modalImageScale = 1;
+    modalMainImage.style.transform = '';
+
     if (product.image) {
         attachImgFallbackChain(modalMainImage, imageSrcCandidates(product.image, product));
         modalMainImage.alt = fullName;
@@ -374,25 +377,55 @@ document.querySelector('[data-modal-backdrop]')?.addEventListener('click', (e) =
     if (!src) return;
     const product = products.find((item) => String(item.id) === String(currentProductId));
     attachImgFallbackChain(modalMainImage, imageSrcCandidates(src, product));
+    modalImageScale = 1;
+    modalMainImage.style.transform = '';
     btn.closest('.modal-thumbs')?.querySelectorAll('.modal-thumb').forEach(t => t.classList.remove('is-active'));
     btn.classList.add('is-active');
 });
 
-// Свайп пальцем по головному фото в модалці товару (мобільні) — перемикає мініатюри
-(function setupModalImageSwipe() {
+// Свайп та pinch-zoom пальцями по головному фото в модалці товару (мобільні)
+(function setupModalImageGestures() {
     const imageWrap = document.querySelector('[data-modal-backdrop] .modal-image-main');
-    if (!imageWrap) return;
+    if (!imageWrap || !modalMainImage) return;
     let startX = 0;
     let startY = 0;
+    let isPinching = false;
+    let pinchStartDist = 0;
+    let pinchStartScale = 1;
+
+    function getDistance(touches) {
+        const dx = touches[0].clientX - touches[1].clientX;
+        const dy = touches[0].clientY - touches[1].clientY;
+        return Math.hypot(dx, dy);
+    }
 
     imageWrap.addEventListener('touchstart', (e) => {
-        const touch = e.touches[0];
-        if (!touch) return;
-        startX = touch.clientX;
-        startY = touch.clientY;
+        if (e.touches.length === 2) {
+            isPinching = true;
+            pinchStartDist = getDistance(e.touches);
+            pinchStartScale = modalImageScale;
+        } else if (e.touches.length === 1) {
+            const touch = e.touches[0];
+            startX = touch.clientX;
+            startY = touch.clientY;
+        }
     }, { passive: true });
 
+    imageWrap.addEventListener('touchmove', (e) => {
+        if (!isPinching || e.touches.length !== 2) return;
+        const dist = getDistance(e.touches);
+        modalImageScale = Math.min(3, Math.max(1, pinchStartScale * (dist / pinchStartDist)));
+        modalMainImage.style.transform = modalImageScale > 1 ? `scale(${modalImageScale})` : '';
+        e.preventDefault();
+    }, { passive: false });
+
     imageWrap.addEventListener('touchend', (e) => {
+        if (isPinching) {
+            if (e.touches.length === 0) isPinching = false;
+            return;
+        }
+        if (modalImageScale > 1.02) return;
+
         const touch = e.changedTouches[0];
         if (!touch) return;
         const dx = touch.clientX - startX;
@@ -1002,6 +1035,7 @@ const products = [
     ];
 
     let currentProductId = null;
+    let modalImageScale = 1;
 
 function escapeHtml(str = '') {
     return String(str)
