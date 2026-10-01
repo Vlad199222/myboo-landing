@@ -928,7 +928,8 @@ const products = [
     {
     id: 10,
     category: "КОМПЛЕКТИ",
-    name: "Комплект Monica",    
+    name: "Комплект Monica",
+    soldOut: true,
     image: "assets/KomplektMonika.jpg",
     images: ["assets/KomplektMonika.jpg", "assets/KomplektMonika2.jpg", "assets/KomplektMonika3.jpg", "assets/rozmiri.png"],
     price: 480,
@@ -957,6 +958,7 @@ const products = [
     id: 12,
     category: "ХАЛАТИ",
     name: "Халатик + трусики",
+    soldOut: true,
     image: "assets/XalatZKruzhevomChervoni.png",
     images: ["assets/XalatZKruzhevomChervoni.png", "assets/XalatZKruzhevomChervoni2.png", "assets/rozmiri.png"],
     color: "червоний",
@@ -988,6 +990,7 @@ const products = [
     id: 14,
     category: "ХАЛАТИ",
     name: "Халатик + трусики",
+    soldOut: true,
     image: "assets/XalatPlusTrusikiChervoni.jpg",
     images: ["assets/XalatPlusTrusikiChervoni.jpg", "assets/XalatPlusTrusikiChervoni2.jpg", "assets/XalatPlusTrusikiChervoni3.jpg", "assets/rozmiri.png"],
     color: "червоний",
@@ -1094,9 +1097,11 @@ function renderProducts() {
 
     grid.innerHTML = '';
 
-    products.forEach(product => {
+    const sortedProducts = [...products].sort((a, b) => (a.soldOut ? 1 : 0) - (b.soldOut ? 1 : 0));
+
+    sortedProducts.forEach(product => {
         const article = document.createElement('article');
-        article.className = 'product-card';
+        article.className = 'product-card' + (product.soldOut ? ' product-card--sold-out' : '');
         article.setAttribute('data-product-modal', product.id);
 
         const fullName = product.color
@@ -1115,11 +1120,31 @@ function renderProducts() {
             ? `<img alt="${escapeHtml(fullName)}" class="product-main-img${imgFitClass}${imgHeightAutoClass}" loading="lazy" ${imgSizeAttrs}>`
             : `<div class="product-placeholder">Фото скоро</div>`;
 
+        const badgeMarkup = product.soldOut
+            ? ''
+            : `<span class="product-sale-badge">Розпродаж</span>`;
+        const soldOutOverlayMarkup = product.soldOut
+            ? `<div class="product-sold-out-overlay"></div>`
+            : '';
+        const quickAddMarkup = product.soldOut
+            ? `<button class="product-quick-add" type="button" disabled>Немає в наявності</button>`
+            : `<button class="product-quick-add" type="button">Детальніше</button>`;
+        const footerMarkup = product.soldOut
+            ? `<span class="product-sold-out-label">Немає в наявності</span>`
+            : `
+                    <span class="product-prices">
+                        <span class="product-price-old">${Math.round(product.price * 1.25)} грн</span>
+                        <span class="product-price">${product.price} грн</span>
+                    </span>
+                    <button class="product-add" data-id="${product.id}" type="button">+</button>
+                `;
+
         article.innerHTML = `
             <div class="product-image">
-                <span class="product-sale-badge">Розпродаж</span>
+                ${badgeMarkup}
+                ${soldOutOverlayMarkup}
                 ${imageMarkup}
-                <button class="product-quick-add" type="button">Детальніше</button>
+                ${quickAddMarkup}
             </div>
             <div class="product-info">
                 <h3 class="product-name">${escapeHtml(product.name)}</h3>
@@ -1128,11 +1153,7 @@ function renderProducts() {
                     ${escapeHtml(product.category)}
                 </p>
                 <div class="product-footer">
-                    <span class="product-prices">
-                        <span class="product-price-old">${Math.round(product.price * 1.25)} грн</span>
-                        <span class="product-price">${product.price} грн</span>
-                    </span>
-                    <button class="product-add" data-id="${product.id}" type="button">+</button>
+                    ${footerMarkup}
                 </div>
             </div>
         `;
@@ -1169,6 +1190,7 @@ function bindProductEvents() {
 
     document.querySelectorAll('.product-card[data-product-modal]').forEach(card => {
         card.addEventListener('click', (e) => {
+            if (card.classList.contains('product-card--sold-out')) return;
             const target = e.target;
             if (target instanceof HTMLElement && target.closest('button')) return;
 
