@@ -17,7 +17,7 @@
       as="image"
       type="image/webp"
     />
-    <link rel="stylesheet" href="/css/styles.css?v=24" />
+    <link rel="stylesheet" href="/css/styles.css?v=25" />
     <!-- Шрифти: менше накреслень + асинхронно (LCP) -->
     <link
       rel="preload"
@@ -166,6 +166,11 @@
           <a href="#products" class="hero-cta hero-cta-glow"
             >Обрати моделі 🔥</a
           >
+          <ul class="hero-trust-strip">
+            <li>✅ Оплата при отриманні</li>
+            <li>🚫 Без передоплати</li>
+            <li>📦 Нова Пошта по всій Україні</li>
+          </ul>
         </div>
         <div class="hero-visual">
           <div class="hero-shape"></div>
@@ -193,7 +198,7 @@
           <h2 class="section-title">Каталог</h2>
 
           <div class="product-section">
-            <h3 class="product-section-title">Бодістокінги</h3>
+            <h3 class="product-section-title">Всі товари в наявності</h3>
             <div class="products-grid" data-products-grid></div>
           </div>
         </div>
@@ -466,7 +471,7 @@
                 </label>
                 <label class="checkout-label">
                   Телефон:
-                  <input type="tel" name="phone" required />
+                  <input type="tel" name="phone" placeholder="+380 XX XXX XX XX" required />
                 </label>
                 <label class="checkout-label">
                   Населений пункт (область, місто/село):
@@ -536,7 +541,16 @@
             </div>
             <div class="modal-size-top">
               <div>
-                <div class="modal-field-label">ОБЕРІТЬ РОЗМІР:</div>
+                <div class="modal-field-label">
+                  ОБЕРІТЬ РОЗМІР:
+                  <button
+                    type="button"
+                    class="modal-size-guide-link"
+                    data-modal-size-guide
+                  >
+                    📏 Таблиця розмірів
+                  </button>
+                </div>
                 <select class="modal-select" data-modal-size></select>
               </div>
               <div>
@@ -642,7 +656,7 @@
               </label>
               <label class="checkout-label">
                 Телефон:
-                <input type="tel" name="phone" required />
+                <input type="tel" name="phone" placeholder="+380 XX XXX XX XX" required />
               </label>
               <label class="checkout-label">
                 Населений пункт (область, місто/село):
@@ -739,6 +753,10 @@
     </div>
 
     <footer class="footer">
+      <div class="container footer-cta">
+        <p>Залишились питання щодо розміру чи доставки?</p>
+        <a href="#products" class="footer-cta-btn">Обрати модель 🔥</a>
+      </div>
       <div class="container footer-inner">
         <div class="footer-brand">
           <a href="#" class="logo">MyBoo</a>
@@ -755,7 +773,7 @@
       </div>
     </footer>
 
-    <script src="/js/main.js?v=24" defer></script>
+    <script src="/js/main.js?v=25" defer></script>
     <script>
       window.addEventListener("load", function () {
         !(function (f, b, e, v, n, t, s) {

@@ -383,6 +383,14 @@ document.querySelector('[data-modal-backdrop]')?.addEventListener('click', (e) =
     btn.classList.add('is-active');
 });
 
+// Кнопка "Таблиця розмірів" — перемикає головне фото на останню мініатюру (розмірна сітка)
+document.querySelector('[data-modal-size-guide]')?.addEventListener('click', () => {
+    const thumbsWrap = document.querySelector('[data-modal-backdrop] .modal-thumbs');
+    const thumbs = thumbsWrap ? Array.from(thumbsWrap.querySelectorAll('.modal-thumb')) : [];
+    if (!thumbs.length) return;
+    thumbs[thumbs.length - 1].click();
+});
+
 // Свайп та pinch-zoom пальцями по головному фото в модалці товару (мобільні)
 (function setupModalImageGestures() {
     const imageWrap = document.querySelector('[data-modal-backdrop] .modal-image-main');

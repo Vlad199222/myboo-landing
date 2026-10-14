@@ -299,6 +299,19 @@ img {
     transform: translateY(-1px) scale(1);
 }
 
+.hero-trust-strip {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.25rem;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
 @keyframes cta-pulse {
     0%, 100% { box-shadow: 0 4px 20px rgba(234, 138, 166, 0.45), 0 0 40px rgba(234, 138, 166, 0.25); }
     50% { box-shadow: 0 4px 25px rgba(234, 138, 166, 0.55), 0 0 55px rgba(234, 138, 166, 0.35); }
@@ -1225,6 +1238,38 @@ img {
     border-top: 1px solid rgba(74, 44, 57, 0.1);
 }
 
+.footer-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(74, 44, 57, 0.1);
+}
+
+.footer-cta p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.footer-cta-btn {
+    display: inline-block;
+    padding: 0.85rem 2rem;
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+    font-weight: 700;
+    border-radius: var(--radius);
+    transition: background var(--transition), transform var(--transition);
+}
+
+.footer-cta-btn:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-2px);
+}
+
 .footer-inner {
     display: flex;
     flex-wrap: wrap;
@@ -1537,11 +1582,28 @@ body.modal-open {
 }
 
 .modal-field-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
     font-size: 0.85rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-hot);
+}
+
+.modal-size-guide-link {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: normal;
+    text-transform: none;
+    color: var(--color-accent-hover);
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .modal-select {
